@@ -1,10 +1,12 @@
-# Puppet Enterprise Install tool for Development
+# PIE tools
 
-## Intro
+# Intro
 
-Blah blah
+This repo is a collection of tools that have been developed by the PIE team and are for all to use. 
+Use at your own risk.
 
-## Create and Install in vmpoooler
+## Puppet Enterprise Install tool for Development
+### Create and Install in vmpoooler
 
 Ensure that you have the pooler PEM file saved in ~/.ssh/id-rsa_acceptance
 
@@ -14,7 +16,7 @@ Next, double check you have read and completed the previous line.
 
 This will install and configure a vmpooler centos 7 node as a PE Master.
 
-## Install PE on a centos node
+### Install PE on a centos node
 
 If you just require PE to be installed. Copy the following script to your
 preferred Centos based node.
