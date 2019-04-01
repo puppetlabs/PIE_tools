@@ -7,4 +7,4 @@ Use at your own risk.
 
 ## Tools and Goodies
 
-[PE_MasterCreator](https://github.com/puppetlabs/PIE_Tools/blob/master/PE_MasterCreator)
+[PE_MasterBuilder](https://github.com/puppetlabs/PIE_Tools/blob/master/PE_MasterBuilder)
