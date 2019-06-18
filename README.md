@@ -8,3 +8,4 @@ Use at your own risk.
 ## Tools and Goodies
 
 [PE_MasterBuilder](https://github.com/puppetlabs/PIE_Tools/blob/master/PE_MasterBuilder)
+[Splunk Test Framework](https://github.com/puppetlabs/PIE_Tools/blob/master/splunk)
