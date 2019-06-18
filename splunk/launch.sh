@@ -27,8 +27,6 @@ bundle exec bolt command run "echo -e \"[user_info]\n  USERNAME = admin\n  PASSW
 START='/opt/splunk/bin/splunk start --accept-license --no-prompt'
 bundle exec bolt command run "$START" -n $splunk_server -i inventory.yaml
 
-#bundle exec bolt command run "puppet apply --debug ./splunk_server.pp" -n $splunk_server -i inventory.yaml
-
 CREATE_TOKEN='/opt/splunk/bin/splunk http-event-collector create gregotoken "gregotoken" -index default -uri "https://localhost:8089" -auth admin:simples1'
 # note : You will need to add the source type here.
 splunk_token=$(bundle exec bolt command run "$CREATE_TOKEN" -n $splunk_server -i inventory.yaml | grep token= | cut -d\= -f2)

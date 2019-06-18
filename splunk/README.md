@@ -20,7 +20,16 @@ $HOME/.ssh/id-rsa_acceptance
 If you just require PE to be installed. Copy the following script to your
 preferred Centos based node.
 
+```bash
 bundle install --path .bundle/gems
-bundle install rake launch
+bundle exec rake launch
+```
 
+## Teardown of your resources
+
+To clean up the framework simply execute this litmus command.
+
+```bash
+bundle exec rake 'litmus:tear_down'
+```
 
