@@ -7,7 +7,7 @@ TAR_FILE=${PE_FILE_NAME}.tar
 DOWNLOAD_URL=http://enterprise.delivery.puppetlabs.net/${PE_RELEASE}/ci-ready/${TAR_FILE}
 
 ## Download PE
-wget -q ${DOWNLOAD_URL}
+curl -o ${TAR_FILE} ${DOWNLOAD_URL}
 if [[ $? -ne 0 ]];then
  echo “Error: wget failed to download [${DOWNLOAD_URL}]”
  exit 2

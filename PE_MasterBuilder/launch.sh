@@ -20,7 +20,3 @@ elif [[ "${PLATFORM}" == "platform9" ]]; then
 else
     error "Unsupported platform [$PLATFORM]"
 fi
-
-
-
-
