@@ -1,0 +1,7 @@
+{
+	"description": "This task will return a hec token if one exists by the param name",
+	"input_method": "environment",
+	"parameters": {
+		"hec_token_name": { "type": "String[1]" }
+	}
+}

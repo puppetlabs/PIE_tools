@@ -1,0 +1,7 @@
+{
+	"description": "This task configures a Splunk Http Endpoint Collector",
+	"input_method": "environment",
+	"parameters": {
+		"hec_token_name": { "type": "String[1]" }
+		}
+}

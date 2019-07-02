@@ -1,0 +1,8 @@
+{
+	"description": "This task will upload any modules that were installed with a bolt puppetfile install",
+	"input_method": "environment",
+	"parameters": {
+		"dest_module_path": { "type": "String[1]" },
+		"install_node" : { "type": "String[2]" }
+	}
+}

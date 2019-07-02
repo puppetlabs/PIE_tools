@@ -1,0 +1,12 @@
+# To install from the forge released package
+# mod 'puppetlabs-splunk_hec', '0.3.0'
+
+# To install master from github
+mod 'splunk_hec',
+    git: 'https://github.com/puppetlabs/puppetlabs-splunk_hec',
+    ref: 'master'
+
+# Example: This is how you use a specific tag
+#mod 'puppet_agent',
+#    git: 'https://github.com/gregohardy/puppetlabs-splunk_hec',
+#    ref: '319ce44a65e73bcf2712ad17be01f9636f0673c9'

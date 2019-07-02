@@ -1,0 +1,8 @@
+{
+	"description": "This task adds the Splunk HEC token to the Puppet Master",
+	"input_method": "environment",
+	"parameters": {
+		"server": { "type": "String[1]" },
+		"splunk_hec_token": { "type": "String[1]" }
+		}
+}

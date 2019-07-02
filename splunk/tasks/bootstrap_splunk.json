@@ -1,0 +1,7 @@
+{
+	"description": "This task installs and configure an Enterprise Splunk server to work with Puppet Enterprise",
+	"input_method": "environment",
+	"parameters": {
+		"hec_token_name": { "type": "String[1]" }
+		}
+}
