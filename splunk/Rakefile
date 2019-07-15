@@ -3,10 +3,82 @@ require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-syntax/tasks/puppet-syntax'
 require 'puppet_blacksmith/rake_tasks' if Bundler.rubygems.find_name('puppet-blacksmith').any?
 require 'puppet-strings/tasks' if Bundler.rubygems.find_name('puppet-strings').any?
+require 'pry-byebug'
+require 'awesome_print'
+require 'colorize'
 
 PuppetLint.configuration.send('disable_relative')
 
-task :launch do
-  system "./launch.sh"
+def get_pe_master()
+  provision_hash = YAML.load_file('./inventory.yaml')
+  provision_hash['groups'][1]['nodes'][0]['name']
+end
+
+def get_splunk_server()
+  provision_hash = YAML.load_file('./inventory.yaml')
+  provision_hash['groups'][1]['nodes'][1]['name']
+end
+
+def module_path()
+  File.join(Dir.pwd, 'spec', 'fixtures', 'modules')
+end
+
+task :clean do
+  Rake::Task['litmus:tear_down']
+  system "rm -f ./inventory.yaml"
+end
+
+task :provision do
+  puts "Puppet Splunk Enterprise Test Framework".bold
+  puts "Provisioning the Puppet Master".green
+  Rake::Task['clean'].invoke
+  Rake::Task['litmus:provision'].invoke('vmpooler', 'centos-7-x86_64-pixa3')
+  Rake::Task['litmus:provision'].reenable
+  puts "Provisioning the Splunk Server".green
+  Rake::Task['litmus:provision'].invoke('vmpooler', 'centos-7-x86_64-pixa3')
+
+  puppet_master = get_pe_master
+  puts "Puppet Master #{puppet_master}".blue
+  splunk_server = get_splunk_server
+  puts "Splunk Server #{splunk_server}".blue
+
+  puts "Install Puppet Enterprise on the Puppet Master   [#{puppet_master}]".green
+  Rake::Task['litmus:install_pe'].invoke(puppet_master)
+  puts "Installing the Puppet Agent on the Splunk server [#{splunk_server}]".green
+  Rake::Task['litmus:install_agent'].invoke('puppet6', splunk_server)
+  Rake::Task['litmus:install_agent'].reenable
+  Rake::Task['litmus:install_agent'].invoke('puppet6', puppet_master)
+  sh('cp inventory.yaml ~/.puppetlabs/bolt/')
+end
+
+
+task :configure do
+  puts "Configuring the Spluk framework".bold
+  puppet_master = get_pe_master
+  puts "Puppet Master #{puppet_master}".blue
+  splunk_server = get_splunk_server
+  puts "Splunk Server #{splunk_server}".blue
+  puts "Run splunk::configure_splunk".green
+  system "bundle exec bolt plan run --modulepath #{module_path} splunk::configure_splunk splunk_server=#{splunk_server} pe_master=#{puppet_master} splunk_token_name=testo"
+  puts "splunk::configure_splunk complete".green
+end
+
+task :inject do
+  puppet_master = get_pe_master
+  system "bundle exec bolt plan run --modulepath #{module_path}  splunk::inject server=#{puppet_master} --debug --trace"
+end
+
+task :verify do
+  puppet_master = get_pe_master
+  splunk_server = get_splunk_server
+  system "bundle exec bolt plan run --modulepath #{module_path}  splunk::verify splunk_server=#{splunk_server} search_host=#{puppet_master} --debug"
+end
+
+task :splunk_server do
+  puts "Splunk Master #{get_splunk_server}".bold
+end
+
+task :puppet_master do
+  puts "Splunk Master #{get_pe_master}".bold
 end
 

@@ -32,6 +32,8 @@ group :system_tests do
   gem "puppet-module-posix-system-r#{minor_version}", require: false, platforms: [:ruby]
   gem "puppet-module-win-system-r#{minor_version}",   require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "puppet_litmus", :git => 'https://github.com/puppetlabs/puppet_litmus.git'
+  gem "awesome_print"
+  gem "colorize"
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']

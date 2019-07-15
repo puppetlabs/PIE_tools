@@ -1,0 +1,8 @@
+{
+	"description": "Use this task to change the splunk servers state : start, stop, restart, status",
+	"input_method": "environment",
+	"parameters": {
+		"state": { "type": "String[1]" },
+		"options": { "type": "String[1]" }
+	}
+}

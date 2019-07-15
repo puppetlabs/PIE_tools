@@ -1,0 +1,4 @@
+{
+	"description": "This task will get the modulepath on the named server",
+	"input_method": "environment"
+}

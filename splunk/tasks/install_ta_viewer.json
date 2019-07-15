@@ -1,0 +1,7 @@
+{
+	"description": "This task installs TA-puppet-viewer",
+	"input_method": "environment",
+	"parameters": {
+		"version": { "type": "String[1]" }
+		}
+}
