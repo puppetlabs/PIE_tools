@@ -48,7 +48,6 @@ task :provision do
   Rake::Task['litmus:install_agent'].invoke('puppet6', splunk_server)
   Rake::Task['litmus:install_agent'].reenable
   Rake::Task['litmus:install_agent'].invoke('puppet6', puppet_master)
-  sh('cp inventory.yaml ~/.puppetlabs/bolt/')
 end
 
 
