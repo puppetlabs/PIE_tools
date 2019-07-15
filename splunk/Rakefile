@@ -79,6 +79,6 @@ task :splunk_server do
 end
 
 task :puppet_master do
-  puts "Splunk Master #{get_pe_master}".bold
+  puts "Puppet Master #{get_pe_master}".bold
 end
 
