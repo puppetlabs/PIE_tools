@@ -52,7 +52,7 @@ end
 
 
 task :configure do
-  puts "Configuring the Spluk framework".bold
+  puts "Configuring the Splunk framework".bold
   puppet_master = get_pe_master
   puts "Puppet Master #{puppet_master}".blue
   splunk_server = get_splunk_server

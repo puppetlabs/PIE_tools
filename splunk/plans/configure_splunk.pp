@@ -20,7 +20,7 @@ plan splunk::configure_splunk(
   $token = $token_result.first.value['_output']
   run_task('splunk::add_hec_token', $pe_master, server => $splunk_server, splunk_hec_token => $token)
 
-  run_task('splunk::install_ta_viewer', $splunk_server, version => '1.3.5')
+  run_task('splunk::install_ta_viewer', $splunk_server, version => '1.5.1')
   run_task('splunk::splunk', $splunk_server, state => 'restart', options => ' ')
 
   info('splunk::configure_splunk complete')

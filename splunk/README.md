@@ -86,7 +86,7 @@ bundle exec rake clean
 
 ```bash
 $ bundle exec rake puppet_master
-Splunk Master d6v5mmjjwq6en12.delivery.puppetlabs.net
+Puppet Master d6v5mmjjwq6en12.delivery.puppetlabs.net
 
 $ bundle exec rake splunk_server
 Splunk Master dwgn8mcp0zxdpny.delivery.puppetlabs.net
