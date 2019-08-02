@@ -5,7 +5,6 @@ plan splunk::configure_splunk(
 ) {
   info('running splunk::configure_splunk')
 
-  run_task('splunk::install_puppetfile', 'localhost', puppetfile => './puppetfile')
   $output = run_task('splunk::get_module_path', $pe_master)
   $modpath = $output.first.value['_output']
   run_task('splunk::upload_modules', 'localhost', dest_module_path => $modpath, install_node => $pe_master)

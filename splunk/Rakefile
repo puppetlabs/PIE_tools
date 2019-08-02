@@ -58,6 +58,7 @@ task :configure do
   splunk_server = get_splunk_server
   puts "Splunk Server #{splunk_server}".blue
   puts "Run splunk::configure_splunk".green
+  system "bundle exec bolt task run --modulepath #{module_path} splunk::install_puppetfile --nodes localhost puppetfile='./puppetfile'"
   system "bundle exec bolt plan run --modulepath #{module_path} splunk::configure_splunk splunk_server=#{splunk_server} pe_master=#{puppet_master} splunk_token_name=testo"
   puts "splunk::configure_splunk complete".green
 end

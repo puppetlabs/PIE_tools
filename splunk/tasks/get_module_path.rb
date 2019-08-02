@@ -6,3 +6,4 @@ _, stdout, stderr = Open3.popen3("puppet config print | egrep \"^modulepath =\" 
 
 config = stdout.read
 print config.strip
+ 
