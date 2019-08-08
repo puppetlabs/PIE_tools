@@ -23,6 +23,17 @@ def module_path()
   File.join(Dir.pwd, 'spec', 'fixtures', 'modules')
 end
 
+def aws_creds_setup()
+  creds = ['AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY', 'AWS_REGION', 'AWS_KEY_NAME']
+  creds.each do |cred|
+    unless ENV[cred]
+      puts "#{cred} not set. Export it to continue.".red
+      exit
+    end
+  end
+end
+
+
 task :clean do
   Rake::Task['litmus:tear_down']
   system "rm -f ./inventory.yaml"
@@ -50,6 +61,11 @@ task :provision do
   Rake::Task['litmus:install_agent'].invoke('puppet6', puppet_master)
 end
 
+task :test do
+  puts "Attempting to start an AWS instance and update the inventory properly"
+  aws_creds_setup()
+  system "bundle exec bolt plan run splunk::aws --modulepath #{module_path}"
+end
 
 task :configure do
   puts "Configuring the Splunk framework".bold
