@@ -21,6 +21,22 @@ sg.authorize_ingress({
     ip_ranges: [{
       cidr_ip: '0.0.0.0/0'
     }]
+  },
+  {
+    ip_protocol: 'tcp',
+    from_port: 80,
+    to_port: 80,
+    ip_ranges: [{
+      cidr_ip: '0.0.0.0/0'
+    }]
+  },
+  {
+    ip_protocol: 'tcp',
+    from_port: 443,
+    to_port: 443,
+    ip_ranges: [{
+      cidr_ip: '0.0.0.0/0'
+    }]
   }]
 })
 

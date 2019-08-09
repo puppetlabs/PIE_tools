@@ -1,0 +1,8 @@
+{
+	"description": "This task installs Puppet Enterprise",
+	"input_method": "environment",
+	"parameters": {
+		"tar_file": { "type": "String[1]" }
+	}
+
+}

@@ -1,19 +1,23 @@
-plan splunk::aws(
+plan splunk::provision_aws(
 ) {
-  info('running splunk::aws')
+  info('running splunk::provision_aws')
 
-  # $user               = $facts['id']
-  $user               = 'gregohardy'
+  $output_user = run_task('splunk::facts', 'localhost', fact_name => 'id')
+  $user = $output_user.first.value['_output']
+  info("User is ${user}")
+
+  $output_home = run_task('splunk::home_dir', 'localhost')
+  $home = $output_home.first.value['_output']
+  info("Home is ${home}")
+
   $basename           = "${user}-splunk"
-
-  $inv = '~/.puppetlabs/bolt/'
-  $sec_group = "${basename}-sg"
+  $inv = "${home}/.puppetlabs/bolt/"
 
   $output_vpc = run_task('splunk::create_vpc', 'localhost', tag_name => $basename)
   $vpc_id = $output_vpc.first.value['_output']
   info("vpc_id is ${vpc_id}")
 
-  $output_sg = run_task('splunk::create_security_group', 'localhost', group_name => $sec_group, vpc_id => $vpc_id)
+  $output_sg = run_task('splunk::create_security_group', 'localhost', group_name => $basename, vpc_id => $vpc_id)
   $sg_id = $output_sg.first.value['_output']
   info("sg_id is ${sg_id}")
 
@@ -35,8 +39,8 @@ plan splunk::aws(
 
   info("Run inventory with ${inv} ${pe_master}")
   run_task('splunk::update_aws_inventory', 'localhost', action => 'provision', platform => 'aws', inventory => $inv, node_name => $pe_master)
-  # run_task('splunk::update_aws_inventory', 'localhost', action => 'provision', inventory => $inv, node_name => $agent01_name)
+  run_task('splunk::update_aws_inventory', 'localhost', action => 'provision', platform => 'aws', inventory => $inv, node_name => $pe_master)
   # run_task('splunk::update_aws_inventory', 'localhost', action => 'provision', inventory => $inv, node_name => $splunk_server_name)
 
-  info('splunk::aws complete')
+  info('splunk::provision_aws complete')
 }

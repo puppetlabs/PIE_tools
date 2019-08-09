@@ -22,7 +22,7 @@ end
 def save_inventory(hostname, platform, inventory_location, vars_hash)
   if !File::ALT_SEPARATOR # ruby only sets this on windows private-key: ~/.ssh/id_rsa
     node = { 'name' => hostname,
-             'config' => { 'transport' => 'ssh', 'ssh' => { 'user' => 'centos', 'run-as' => 'root', 'private-key' => "#{ENV['AWS_PRIVATE_KEY']}.pem", 'host-key-check' => false } },
+             'config' => { 'transport' => 'ssh', 'ssh' => { 'user' => 'centos', 'private-key' => "#{ENV['AWS_PRIVATE_KEY']}.pem", 'host-key-check' => false } },
              'facts' => { 'provisioner' => 'aws', 'platform' => platform },
              'vars'  => vars_hash }
     group_name = 'ssh_nodes'

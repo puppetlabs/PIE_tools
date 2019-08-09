@@ -39,7 +39,7 @@ task :clean do
   system "rm -f ./inventory.yaml"
 end
 
-task :provision do
+task :provision_vmpooler do
   puts "Puppet Splunk Enterprise Test Framework".bold
   puts "Provisioning the Puppet Master".green
   Rake::Task['clean'].invoke
@@ -61,10 +61,29 @@ task :provision do
   Rake::Task['litmus:install_agent'].invoke('puppet6', puppet_master)
 end
 
-task :test do
-  puts "Attempting to start an AWS instance and update the inventory properly"
+task :provision_aws do
+  system "rm -f ~/.puppetlabs/bolt/inventory.yaml"
+  puts "Puppet Splunk Enterprise Test Framework".bold
+  puts "Provisioning the Puppet Master".green
   aws_creds_setup()
-  system "bundle exec bolt plan run splunk::aws --modulepath #{module_path}"
+  system "bundle exec bolt plan run splunk::provision_aws --modulepath #{module_path} --debug --trace"
+  system "cp ~/.puppetlabs/bolt/inventory.yaml ."
+
+end
+task :configure_aws do
+  puppet_master = get_pe_master
+  puts "Puppet Master #{puppet_master}".blue
+  splunk_server = get_splunk_server
+  puts "Splunk Server #{splunk_server}".blue
+  system "bundle exec bolt plan run splunk::configure_splunk_in_aws --modulepath #{module_path} splunk_server=#{splunk_server} pe_master=#{puppet_master} splunk_token_name=testo --debug --trace"
+
+end
+
+task :deprovision_aws do
+  puts "Puppet Splunk Enterprise Test Framework".bold
+  aws_creds_setup()
+  system "bundle exec bolt plan run splunk::deprovision_aws --modulepath #{module_path}"
+  system "rm -f inventory.yaml ~/.puppetlabs/bolt/inventory.yaml"
 end
 
 task :configure do
@@ -75,7 +94,7 @@ task :configure do
   puts "Splunk Server #{splunk_server}".blue
   puts "Run splunk::configure_splunk".green
   system "bundle exec bolt task run --modulepath #{module_path} splunk::install_puppetfile --nodes localhost puppetfile='./puppetfile'"
-  system "bundle exec bolt plan run --modulepath #{module_path} splunk::configure_splunk splunk_server=#{splunk_server} pe_master=#{puppet_master} splunk_token_name=testo"
+  system "bundle exec bolt plan run --modulepath #{module_path} splunk::configure_splunk splunk_server=#{splunk_server} pe_master=#{puppet_master} splunk_token_name=testo --debug"
   puts "splunk::configure_splunk complete".green
 end
 

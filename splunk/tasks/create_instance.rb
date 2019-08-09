@@ -25,8 +25,9 @@ instance = ec2.create_instances({
 # Wait for the instance to be created, running, and passed status checks
 ec2.client.wait_until(:instance_running, {instance_ids: [instance.first.id]})
 
-instance.create_tags({ tags: [{ key: 'Name', value: instance_name }, { key: 'lifetime', value: '1m' }]})
+instance.create_tags({ tags: [{ key: 'Name', value: instance_name }, { key: 'lifetime', value: '1d' }]})
 i = ec2.instance(instance.first.id)
+
 print i.public_dns_name
 
 
