@@ -33,13 +33,17 @@ plan splunk::provision_aws(
   $pe_master = $output.first.value['_output']
   info("instance id is ${pe_master}")
 
+  $output_splunk = run_task('splunk::create_instance', 'localhost', instance_name => $basename, subnet_id => $subnet_id, sg_id => $sg_id)
+  $splunk_master = $output_splunk.first.value['_output']
+  info("instance id is ${splunk_master}")
+
   $output_table = run_task('splunk::create_route', 'localhost', tag_name => $basename, vpc_id => $vpc_id, subnet_id => $subnet_id, ig_id => $ig_id)
   $table_id = $output_sub.first.value['_output']
   info("table_id is ${table_id}")
 
   info("Run inventory with ${inv} ${pe_master}")
   run_task('splunk::update_aws_inventory', 'localhost', action => 'provision', platform => 'aws', inventory => $inv, node_name => $pe_master)
-  run_task('splunk::update_aws_inventory', 'localhost', action => 'provision', platform => 'aws', inventory => $inv, node_name => $pe_master)
+  run_task('splunk::update_aws_inventory', 'localhost', action => 'provision', platform => 'aws', inventory => $inv, node_name => $splunk_master)
   # run_task('splunk::update_aws_inventory', 'localhost', action => 'provision', inventory => $inv, node_name => $splunk_server_name)
 
   info('splunk::provision_aws complete')

@@ -14,7 +14,6 @@ function is_ok
     fi
 }
 
-#!/bin/bash
 
 PE_RELEASE=2019.0
 PE_LATEST=$(curl http://enterprise.delivery.puppetlabs.net/${PE_RELEASE}/ci-ready/LATEST)
@@ -26,9 +25,9 @@ if [ ! -d packages ];then
     mkdir packages
 fi
 
-if [ ! -f "${TAR_FILE}"];then
+if [ ! -f "packages/${TAR_FILE}" ];then
     ## Download PE
-    curl -o ${TAR_FILE} packages/${DOWNLOAD_URL}
+    curl -o packages/${TAR_FILE} ${DOWNLOAD_URL}
     is_ok $? “Error: wget failed to download [${DOWNLOAD_URL}]”
 fi
 

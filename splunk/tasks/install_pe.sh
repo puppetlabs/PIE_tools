@@ -13,30 +13,36 @@ function is_ok
     fi
 }
 
-"GH: >>>>> ${PT_tar_file}"
-ls
-# tar xvf ${PT_tar_file}
+if [ ! -f "${PT_tar_file}" ];then
+    echo -n "Failed to find the tar file [${PT_tar_file}]. Check the upload."
+    exit 2
+fi
+
+tar xvf ${PT_tar_file}
 is_ok $? “Error: Failed to untar [${PT_tar_file}]”
 
 PE_FILE_NAME=$(echo $PT_tar_file | cut -d\. -f1-3)
 
-echo "GH: Pe file is [$PE_FILE_NAME] [${PT_tar_file}]"
-
 cd ${PE_FILE_NAME}
+consol_admin_password_omit=$(grep '#"console_admin_password' conf.d/pe.conf)
+if [ -z "${consol_admin_password_omit}" ];then
+    sed -i 's/"console_admin_password/#"console_admin_password/' conf.d/pe.conf
+fi
 sudo ./puppet-enterprise-installer -c conf.d/pe.conf
 is_ok $? “Error: Failed to install Puppet Enterprise. Please check the logs and call Bryan.x ”
 
 ## Finalize configuration
 echo “Finalize PE install”
 sudo puppet agent -t
-# if [[ $? -ne 0 ]];then
-#  echo “Error: Agent run failed. Check the logs above...”
-#  exit 2
-# fi
 
 ## Create and configure Certs
 sudo chmod 777 /etc/puppetlabs/puppet/puppet.conf
 echo "autosign = true" >> /etc/puppetlabs/puppet/puppet.conf
 sudo chmod 755 /etc/puppetlabs/puppet/puppet.conf
+
+ruby_exists=$(which ruby)
+if [ -z "${ruby_exists}"];then
+    sudo yum install -y ruby
+fi
 
 echo "I'd restart the master now to be safe!"

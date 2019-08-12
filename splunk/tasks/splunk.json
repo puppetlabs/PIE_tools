@@ -3,6 +3,7 @@
 	"input_method": "environment",
 	"parameters": {
 		"state": { "type": "String[1]" },
-		"options": { "type": "String[1]" }
+		"options": { "type": "Optional[String[1]]" },
+		"sudo": { "type": "Optional[String[1]]" }
 	}
 }

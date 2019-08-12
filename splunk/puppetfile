@@ -6,9 +6,6 @@ mod 'splunk_hec',
     git: 'https://github.com/puppetlabs/puppetlabs-splunk_hec',
     ref: 'master'
 
-mod 'puppetlabs-amazon_aws', '0.3.0'
-mod 'puppetlabs-azure_arm', '0.2.1'
-
 # Example: This is how you use a specific tag
 #mod 'puppet_agent',
 #    git: 'https://github.com/gregohardy/puppetlabs-splunk_hec',

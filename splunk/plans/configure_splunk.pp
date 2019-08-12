@@ -13,14 +13,14 @@ plan splunk::configure_splunk(
   run_task('splunk::splunk', $splunk_server, state => 'start', options => '--accept-license --no-prompt')
   run_task('splunk::configure_a_hec', $splunk_server, hec_token_name => $splunk_token_name)
   run_task('splunk::enable_hec', $splunk_server, hec_token_name => $splunk_token_name)
-  run_task('splunk::splunk', $splunk_server, state => 'restart', options => ' ')
+  run_task('splunk::splunk', $splunk_server, state => 'restart')
 
   $token_result = run_task('splunk::get_hec_token', $splunk_server, hec_token_name => $splunk_token_name)
   $token = $token_result.first.value['_output']
   run_task('splunk::add_hec_token', $pe_master, server => $splunk_server, splunk_hec_token => $token)
 
   run_task('splunk::install_ta_viewer', $splunk_server, version => '1.5.1')
-  run_task('splunk::splunk', $splunk_server, state => 'restart', options => ' ')
+  run_task('splunk::splunk', $splunk_server, state => 'restart')
 
   info('splunk::configure_splunk complete')
 }
