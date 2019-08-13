@@ -6,9 +6,6 @@
 
 require 'open3'
 
-require 'pry'
-
-binding.pry
 dest=ENV['PT_dest_module_path'][0..-1]
 
 Open3.popen3("ssh -i #{ENV['PT_key_file']} #{ENV['PT_user_host']} 'mkdir -p ~/modules'")

@@ -40,9 +40,6 @@ sudo chmod 777 /etc/puppetlabs/puppet/puppet.conf
 echo "autosign = true" >> /etc/puppetlabs/puppet/puppet.conf
 sudo chmod 755 /etc/puppetlabs/puppet/puppet.conf
 
-ruby_exists=$(which ruby)
-if [ -z "${ruby_exists}"];then
-    sudo yum install -y ruby
-fi
+sudo yum install -y ruby
 
 echo "I'd restart the master now to be safe!"

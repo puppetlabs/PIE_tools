@@ -18,7 +18,8 @@ function is_ok
 wget -O $PT_version.tar.gz https://github.com/puppetlabs/TA-puppet-report-viewer/archive/$PT_version.tar.gz
 is_ok $? "Failed download the TA-puppet-report-viewer"
 
-gunzip -c $PT_version.tar.gz
+
+gunzip $PT_version.tar.gz
 is_ok $? "Unable to unzip the tar"
 
 tar xvf $PT_version.tar

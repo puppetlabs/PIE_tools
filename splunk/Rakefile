@@ -66,7 +66,7 @@ task :provision_aws do
   puts "Puppet Splunk Enterprise Test Framework".bold
   puts "Provisioning the Puppet Master".green
   aws_creds_setup()
-  system "bundle exec bolt plan run splunk::provision_aws --modulepath #{module_path} --debug --trace"
+  system "bundle exec bolt plan run splunk::provision_aws --modulepath #{module_path}"
   system "cp ~/.puppetlabs/bolt/inventory.yaml ."
 
 end
@@ -101,6 +101,11 @@ end
 task :inject do
   puppet_master = get_pe_master
   system "bundle exec bolt plan run --modulepath #{module_path}  splunk::inject server=#{puppet_master} --debug --trace"
+end
+
+task :inject_aws do
+  puppet_master = get_pe_master
+  system "bundle exec bolt plan run --modulepath #{module_path}  splunk::inject_aws server=#{puppet_master} --debug --trace"
 end
 
 task :verify do

@@ -14,4 +14,7 @@ end
 
 exit 4 if realHome.nil?
 
+Open3.popen3("mkdir -p #{realHome}/.puppetlabs/bolt/")
+Open3.popen3("mkdir -p #{realHome}/.puppetlabs/bolt/modules")
+
 print realHome

@@ -31,6 +31,8 @@ is_ok $? "Failed to set the admin credentials in the user-seed.conf"
 $PT_sudo mv user-seed.conf /opt/splunk/etc/system/local/.
 is_ok $? "Failed to move user-seed.conf to /opt/splunk/etc/system/local/"
 
+$PT_sudo yum install -y ruby
+
 
 
 
