@@ -40,7 +40,6 @@ fi
 scp -i ${PT_key_file_path} -oStrictHostKeyChecking=no packages/${TAR_FILE} ${PT_dest}: > /dev/null 2>&1
 is_ok $? “Error: failed to upload [${TAR_FILE}]”
 
-
 echo -n "${TAR_FILE}"
 
 

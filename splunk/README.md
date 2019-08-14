@@ -19,7 +19,7 @@ You will need to export your AWS credentials, region and private key file:
 export AWS_ACCESS_KEY_ID = 'xxxxxxx'
 export AWS_SECRET_ACCESS_KEY = 'yyyyyyy'
 export AWS_REGION = 'eu-west-1'
-export AWS_KEY_NAME = 'gregohardy'
+export AWS_PRIVATE_KEY=~/.ssh/gregohardy.pem
 
 You will need to have the AWS private key installed at :
 $HOME/.ssh/ .e.g gregohardy.pem. (This is created in the Amazon Console UI)
