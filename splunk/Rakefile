@@ -34,7 +34,7 @@ def aws_creds_setup()
 end
 
 
-task :clean do
+task :deprovision_vmpooler do
   Rake::Task['litmus:tear_down']
   system "rm -f ./inventory.yaml"
 end
@@ -86,7 +86,7 @@ task :deprovision_aws do
   system "rm -f inventory.yaml ~/.puppetlabs/bolt/inventory.yaml"
 end
 
-task :configure do
+task :configure_vmpooler do
   puts "Configuring the Splunk framework".bold
   puppet_master = get_pe_master
   puts "Puppet Master #{puppet_master}".blue
@@ -98,7 +98,7 @@ task :configure do
   puts "splunk::configure_splunk complete".green
 end
 
-task :inject do
+task :inject_vmpooler do
   puppet_master = get_pe_master
   system "bundle exec bolt plan run --modulepath #{module_path}  splunk::inject server=#{puppet_master} --debug --trace"
 end
@@ -108,7 +108,7 @@ task :inject_aws do
   system "bundle exec bolt plan run --modulepath #{module_path}  splunk::inject_aws server=#{puppet_master} --debug --trace"
 end
 
-task :verify do
+task :verify_vmpooler do
   puppet_master = get_pe_master
   splunk_server = get_splunk_server
   system "bundle exec bolt plan run --modulepath #{module_path}  splunk::verify splunk_server=#{splunk_server} search_host=#{puppet_master} --debug"
