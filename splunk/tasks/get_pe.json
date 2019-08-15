@@ -1,0 +1,8 @@
+{
+	"description": "This task downloads Puppet Enterprise",
+	"input_method": "environment",
+	"parameters": {
+		"key_file_path": { "type": "String[1]" },
+		"dest": { "type": "String[1]" }
+	}
+}

@@ -1,6 +1,7 @@
 #!/bin/bash
 
-PT_hec_token_name=$PT_hec_token_name
+#$PT_hec_token_name
+
 
 function is_ok
 {
@@ -14,7 +15,7 @@ function is_ok
 }
 
 ## Create an endpoint and generate a HEC token
-output=$(/opt/splunk/bin/splunk http-event-collector create ${PT_hec_token_name} "${PT_hec_token_name}" -index default -uri "https://localhost:8089" -auth admin:simples1 2>&1)
+output=$(${PT_sudo} /opt/splunk/bin/splunk http-event-collector create ${PT_hec_token_name} "${PT_hec_token_name}" -index default -uri "https://localhost:8089" -auth admin:simples1 2>&1)
 is_ok $? "Failed to create the Http Event Controller [$PT_hec_token_name] $output"
 
 splunk_token=$(echo ${output} | grep token= | cut -d\= -f2)

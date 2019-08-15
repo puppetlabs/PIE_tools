@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# PT_version
+# PT_sudo
+
 function is_ok
 {
     ret=$1
@@ -12,7 +15,15 @@ function is_ok
 }
 
 ## Install TA report viewer
-wget -O /tmp/$PT_version.tar.gz https://github.com/puppetlabs/TA-puppet-report-viewer/archive/$PT_version.tar.gz
+wget -O $PT_version.tar.gz https://github.com/puppetlabs/TA-puppet-report-viewer/archive/$PT_version.tar.gz
 is_ok $? "Failed download the TA-puppet-report-viewer"
-gunzip -c /tmp/$PT_version.tar.gz | tar -C /opt/splunk/etc/apps/ -xf -
+
+
+gunzip $PT_version.tar.gz
+is_ok $? "Unable to unzip the tar"
+
+tar xvf $PT_version.tar
+is_ok $? "Unable to unpack the tar file [$PT_version.tar]"
+
+$PT_sudo mv TA-puppet-report-viewer-${PT_version} /opt/splunk/etc/apps/
 is_ok $? "Failed to install the TA-puppet-report-viewer"

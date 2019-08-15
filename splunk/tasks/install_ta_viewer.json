@@ -2,6 +2,7 @@
 	"description": "This task installs TA-puppet-viewer",
 	"input_method": "environment",
 	"parameters": {
-		"version": { "type": "String[1]" }
+		"version": { "type": "String[1]" },
+		"sudo": { "type": "Optional[String[1]]" }
 		}
 }

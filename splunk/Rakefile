@@ -23,12 +23,23 @@ def module_path()
   File.join(Dir.pwd, 'spec', 'fixtures', 'modules')
 end
 
-task :clean do
+def aws_creds_setup()
+  creds = ['AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY', 'AWS_REGION', 'AWS_KEY_NAME']
+  creds.each do |cred|
+    unless ENV[cred]
+      puts "#{cred} not set. Export it to continue.".red
+      exit
+    end
+  end
+end
+
+
+task :deprovision_vmpooler do
   Rake::Task['litmus:tear_down']
   system "rm -f ./inventory.yaml"
 end
 
-task :provision do
+task :provision_vmpooler do
   puts "Puppet Splunk Enterprise Test Framework".bold
   puts "Provisioning the Puppet Master".green
   Rake::Task['clean'].invoke
@@ -50,8 +61,32 @@ task :provision do
   Rake::Task['litmus:install_agent'].invoke('puppet6', puppet_master)
 end
 
+task :provision_aws do
+  system "rm -f ~/.puppetlabs/bolt/inventory.yaml"
+  puts "Puppet Splunk Enterprise Test Framework".bold
+  puts "Provisioning the Puppet Master".green
+  aws_creds_setup()
+  system "bundle exec bolt plan run splunk::provision_aws --modulepath #{module_path}"
+  system "cp ~/.puppetlabs/bolt/inventory.yaml ."
 
-task :configure do
+end
+task :configure_aws do
+  puppet_master = get_pe_master
+  puts "Puppet Master #{puppet_master}".blue
+  splunk_server = get_splunk_server
+  puts "Splunk Server #{splunk_server}".blue
+  system "bundle exec bolt plan run splunk::configure_splunk_in_aws --modulepath #{module_path} splunk_server=#{splunk_server} pe_master=#{puppet_master} splunk_token_name=testo --debug --trace"
+
+end
+
+task :deprovision_aws do
+  puts "Puppet Splunk Enterprise Test Framework".bold
+  aws_creds_setup()
+  system "bundle exec bolt plan run splunk::deprovision_aws --modulepath #{module_path}"
+  system "rm -f inventory.yaml ~/.puppetlabs/bolt/inventory.yaml"
+end
+
+task :configure_vmpooler do
   puts "Configuring the Splunk framework".bold
   puppet_master = get_pe_master
   puts "Puppet Master #{puppet_master}".blue
@@ -59,19 +94,30 @@ task :configure do
   puts "Splunk Server #{splunk_server}".blue
   puts "Run splunk::configure_splunk".green
   system "bundle exec bolt task run --modulepath #{module_path} splunk::install_puppetfile --nodes localhost puppetfile='./puppetfile'"
-  system "bundle exec bolt plan run --modulepath #{module_path} splunk::configure_splunk splunk_server=#{splunk_server} pe_master=#{puppet_master} splunk_token_name=testo"
+  system "bundle exec bolt plan run --modulepath #{module_path} splunk::configure_splunk splunk_server=#{splunk_server} pe_master=#{puppet_master} splunk_token_name=testo --debug"
   puts "splunk::configure_splunk complete".green
 end
 
-task :inject do
+task :inject_vmpooler do
   puppet_master = get_pe_master
   system "bundle exec bolt plan run --modulepath #{module_path}  splunk::inject server=#{puppet_master} --debug --trace"
 end
 
-task :verify do
+task :inject_aws do
+  puppet_master = get_pe_master
+  system "bundle exec bolt plan run --modulepath #{module_path}  splunk::inject_aws server=#{puppet_master} --debug --trace"
+end
+
+task :verify_vmpooler do
   puppet_master = get_pe_master
   splunk_server = get_splunk_server
   system "bundle exec bolt plan run --modulepath #{module_path}  splunk::verify splunk_server=#{splunk_server} search_host=#{puppet_master} --debug"
+end
+
+task :verify_aws do
+  puppet_master = get_pe_master
+  splunk_server = get_splunk_server
+  system "bundle exec bolt plan run --modulepath #{module_path}  splunk::verify_aws splunk_server=#{splunk_server} search_host=#{puppet_master} --debug"
 end
 
 task :splunk_server do
