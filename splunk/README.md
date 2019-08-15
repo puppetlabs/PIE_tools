@@ -82,7 +82,7 @@ or
 To view your data by host.
 
 ```bash
-bundle exec rake verify
+bundle exec rake verify_aws
 ```
 
 ## Teardown
@@ -90,7 +90,7 @@ bundle exec rake verify
 To clean up your resources.
 
 ```bash
-bundle exec rake clean
+bundle exec rake deprovision_aws
 ```
 
 ## Help commands

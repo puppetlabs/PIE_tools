@@ -37,6 +37,62 @@ sg.authorize_ingress({
     ip_ranges: [{
       cidr_ip: '0.0.0.0/0'
     }]
+  },
+  {
+    ip_protocol: 'tcp',
+    from_port: 4433,
+    to_port: 4433,
+    ip_ranges: [{
+      cidr_ip: '0.0.0.0/0'
+    }]
+  },
+  { # splunk
+    ip_protocol: 'tcp',
+    from_port: 8000,
+    to_port: 8000,
+    ip_ranges: [{
+      cidr_ip: '0.0.0.0/0'
+    }]
+  },
+  { # splunk
+    ip_protocol: 'tcp',
+    from_port: 8088,
+    to_port: 8088,
+    ip_ranges: [{
+      cidr_ip: '0.0.0.0/0'
+    }]
+  },
+  {
+    ip_protocol: 'tcp',
+    from_port: 8140,
+    to_port: 8140,
+    ip_ranges: [{
+      cidr_ip: '0.0.0.0/0'
+    }]
+  },
+  {
+    ip_protocol: 'tcp',
+    from_port: 8142,
+    to_port: 8142,
+    ip_ranges: [{
+      cidr_ip: '0.0.0.0/0'
+    }]
+  },
+  {
+    ip_protocol: 'tcp',
+    from_port: 8170,
+    to_port: 8170,
+    ip_ranges: [{
+      cidr_ip: '0.0.0.0/0'
+    }]
+  },
+  {
+    ip_protocol: 'tcp',
+    from_port: 61613,
+    to_port: 61613,
+    ip_ranges: [{
+      cidr_ip: '0.0.0.0/0'
+    }]
   }]
 })
 

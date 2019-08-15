@@ -114,6 +114,12 @@ task :verify do
   system "bundle exec bolt plan run --modulepath #{module_path}  splunk::verify splunk_server=#{splunk_server} search_host=#{puppet_master} --debug"
 end
 
+task :verify_aws do
+  puppet_master = get_pe_master
+  splunk_server = get_splunk_server
+  system "bundle exec bolt plan run --modulepath #{module_path}  splunk::verify_aws splunk_server=#{splunk_server} search_host=#{puppet_master} --debug"
+end
+
 task :splunk_server do
   puts "Splunk Master #{get_splunk_server}".bold
 end

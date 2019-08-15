@@ -2,6 +2,7 @@
 	"description": "This task will do a splunk search",
 	"input_method": "environment",
 	"parameters": {
-		"host": { "type": "String[1]" }
+		"host": { "type": "String[1]" },
+		"sudo": { "type": "Optional[String[1]]" }
 		}
 }
