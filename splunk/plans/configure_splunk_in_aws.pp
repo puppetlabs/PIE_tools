@@ -4,7 +4,8 @@ plan splunk::configure_splunk_in_aws(
   String[2] $splunk_token_name
 ) {
   info('running splunk::configure_splunk_in_aws')
-  $priv_key = ENV['AWS_PRIVATE_KEY']
+  $output_env = run_task('splunk::get_env_value', 'localhost', param => 'AWS_PRIVATE_KEY')
+  $priv_key = $output_env.first.value['_output']
 
   info('Downloading PE. Please wait....')
   $output = run_task('splunk::get_pe', 'localhost', key_file_path => $priv_key, dest => "centos@${pe_master}")
