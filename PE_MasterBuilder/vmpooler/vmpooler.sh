@@ -13,7 +13,7 @@ function launch_in_vmpooler
     log "Ensure you have the pooler private PEM set at this location : ${PEM_FILE}"
 
     # Get the master centos host from the pooler. Strip the FQDN
-    fqdn=$(floaty get centos-7-x86_64-pixa3 | awk '{ print $2 }') 
+    fqdn=$(floaty get centos-7-x86_64 | awk '{ print $2 }') 
     is_ok $? "Failed to get a node list from floaty. Please check your vmpoooler token. Run [floaty list] and check for problems"
 
     hostname=$(echo $fqdn | cut -d. -f1)

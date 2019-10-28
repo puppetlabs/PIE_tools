@@ -43,10 +43,10 @@ task :provision_vmpooler do
   puts "Puppet Splunk Enterprise Test Framework".bold
   puts "Provisioning the Puppet Master".green
   Rake::Task['clean'].invoke
-  Rake::Task['litmus:provision'].invoke('vmpooler', 'centos-7-x86_64-pixa3')
+  Rake::Task['litmus:provision'].invoke('vmpooler', 'centos-7-x86_64')
   Rake::Task['litmus:provision'].reenable
   puts "Provisioning the Splunk Server".green
-  Rake::Task['litmus:provision'].invoke('vmpooler', 'centos-7-x86_64-pixa3')
+  Rake::Task['litmus:provision'].invoke('vmpooler', 'centos-7-x86_64')
 
   puppet_master = get_pe_master
   puts "Puppet Master #{puppet_master}".blue
