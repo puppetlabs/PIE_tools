@@ -122,7 +122,7 @@ The setup is launced in vmpooler. It will create a Puppet Master and Splunk Ente
 An agent will already be installed on the Splunk Server.
 
 ```bash
-bundle exec rake provision
+bundle exec rake provision_vmpooler
 ```
 
 ## To configure the splunk server
@@ -130,7 +130,7 @@ bundle exec rake provision
 To configure the splunk setup simply run
 
 ```bash
-bundle exec rake configure
+bundle exec rake configure_vmpooler
 ```
 
 ## Inecting data into Splunk (via puppetlabs-splunk-hec)
@@ -140,7 +140,7 @@ node and direct the splunk-hec module to create a splunk-hec report. This will b
 HTTP Endpoint Collector.
 
 ```bash
-bundle exec rake inject
+bundle exec rake inject_vmpooler
 ```
 
 ## Its all about the data. How do I view my data in splunk?
@@ -166,7 +166,7 @@ or
 To view your data by host.
 
 ```bash
-bundle exec rake verify
+bundle exec rake verify_vmpooler
 ```
 
 ## Teardown
