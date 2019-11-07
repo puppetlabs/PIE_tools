@@ -5,9 +5,13 @@ plan splunk::configure_splunk(
 ) {
   info('running splunk::configure_splunk')
 
-  $output = run_task('splunk::get_module_path', $pe_master)
-  $modpath = $output.first.value['_output']
-  run_task('splunk::upload_modules', 'localhost', dest_module_path => $modpath, install_node => $pe_master)
+  # Use these tasks to install modules using Puppetfile, useful when you want to pin to a specific version
+  # $output = run_task('splunk::get_module_path', $pe_master)
+  # $modpath = $output.first.value['_output']
+  # run_task('splunk::upload_modules', 'localhost', dest_module_path => $modpath, install_node => $pe_master)
+
+  # Install the splunk_hec module
+  run_command('puppet module install puppetlabs-splunk_hec', $pe_master, '_catch_errors' => true)
 
   run_task('splunk::bootstrap_splunk', $splunk_server, hec_token_name => $splunk_token_name)
   run_task('splunk::splunk', $splunk_server, state => 'start', options => '--accept-license --no-prompt')
