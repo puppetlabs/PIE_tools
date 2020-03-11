@@ -11,12 +11,12 @@ PuppetLint.configuration.send('disable_relative')
 
 def get_pe_master()
   provision_hash = YAML.load_file('./inventory.yaml')
-  provision_hash['groups'][1]['nodes'][0]['name']
+  provision_hash['groups'][1]['targets'][0]['name']
 end
 
 def get_splunk_server()
   provision_hash = YAML.load_file('./inventory.yaml')
-  provision_hash['groups'][1]['nodes'][1]['name']
+  provision_hash['groups'][1]['targets'][1]['name']
 end
 
 def module_path()
