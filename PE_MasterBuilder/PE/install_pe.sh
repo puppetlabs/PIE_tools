@@ -1,10 +1,10 @@
 #!/bin/bash
 
-PE_RELEASE=2019.1
-PE_LATEST=$(curl http://enterprise.delivery.puppetlabs.net/${PE_RELEASE}/ci-ready/LATEST)
+PE_RELEASE=2019.6
+PE_LATEST=$(curl https://artifactory.delivery.puppetlabs.net/artifactory/enterprise/${PE_RELEASE}/release/ci-ready/LATEST)
 PE_FILE_NAME=puppet-enterprise-${PE_LATEST}-el-7-x86_64
 TAR_FILE=${PE_FILE_NAME}.tar
-DOWNLOAD_URL=http://enterprise.delivery.puppetlabs.net/${PE_RELEASE}/ci-ready/${TAR_FILE}
+DOWNLOAD_URL=https://artifactory.delivery.puppetlabs.net/artifactory/enterprise/${PE_RELEASE}/release/ci-ready/${TAR_FILE}
 
 ## Download PE
 curl -o ${TAR_FILE} ${DOWNLOAD_URL}
@@ -30,6 +30,7 @@ fi
 ## Finalize configuration
 echo “Finalize PE install”
 puppet agent -t
+puppet infra console_password --password=pie
 # if [[ $? -ne 0 ]];then
 #  echo “Error: Agent run failed. Check the logs above...”
 #  exit 2
