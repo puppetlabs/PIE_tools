@@ -1,8 +1,11 @@
 #!/usr/bin/env ruby
 
-require_relative './helpers'
-
 begin
+  $stdout.sync = true
+  $stderr.sync = true
+
+  require_relative './helpers'
+
   num_nodes = get_arg("num_nodes", 0)
   start_at = get_arg("start_at", 1).to_i
   per_node_delay = get_arg("per_node_delay", 2).to_i
