@@ -21,7 +21,7 @@ if [[ $? -ne 0 ]];then
 fi
 
 cd ${PE_FILE_NAME}
-./puppet-enterprise-installer
+printf '1' | ./puppet-enterprise-installer
 if [[ $? -ne 0 ]];then
  echo “Error: Failed to install Puppet Enterprise. Please check the logs and call Bryan.x ”
  exit 2
