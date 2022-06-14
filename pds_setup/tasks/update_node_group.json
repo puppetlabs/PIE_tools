@@ -1,0 +1,25 @@
+{
+  "description": "Update parameters of a Classifier Node Group.",
+  "files": [
+    "pds_setup/lib/helpers/node_groups.rb",
+    "pds_setup/files/task_helper.rb"
+  ],
+  "input_method": "stdin",
+  "parameters": {
+    "group_name": {
+      "description": "The name of the node group to make changes to.",
+      "type": "String[1]"
+    },
+    "class_parameters": {
+      "description": "A hash of hashes, keyed by class names. Each value hash must be keyed by the parameter name. Null values will remove the parameter or class, respectively.",
+      "type": "Hash[String,Optional[Hash[String,Optional[Variant[String,Boolean,Numeric,Array,Hash]]]]]"
+    },
+    "config_data": {
+      "description": "A hash of hashes, keyed by class names. Each value hash must be keyed by the parameter name. Null values will remove the parameter or class, respectively.",
+      "type": "Optional[Hash[String,Optional[Hash[String,Optional[Variant[String,Boolean,Numeric,Array,Hash]]]]]]"
+    }
+
+    
+  },
+  "private": true
+}
