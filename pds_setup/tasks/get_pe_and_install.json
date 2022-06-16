@@ -1,0 +1,22 @@
+{
+"description": "Download and unpack the correct pe tarball for the platform",
+  "input_method": "environment",
+  "parameters": {
+    "platform_tag": {
+      "description": "The primary platform os-ver-arch tag we will install on. Needed to construct the tarball url",
+      "type": "String"
+    },
+    "version": {
+      "description": "The version of pe. Needed to construct the tarball url. Takes precedence over pe_family if given.",
+      "type": "Optional[String]"
+    },
+    "family": {
+      "description": "The first two version numbers of a PE release (2019.1 for example). If no version is provided, this may be specified to pull the latest tarball from ci-ready instead.",
+      "type": "Optional[String]"
+    },
+    "workdir": {
+      "description": "The directory in which to download and unpack the PE tarball. (Default: '/root)'",
+      "type": "Optional[String]"
+    }
+  }
+}

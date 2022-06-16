@@ -1,0 +1,14 @@
+{
+  "description": "Set up codemanager and point to a remote repository",
+  "input_method": "environment",
+  "parameters": {
+      "r10k_remote": {
+	  "description": "git link to remote code repo",
+	  "type": "String"
+      },
+      "r10k_private_key": {
+          "description": "path to key used in r10k remote",
+          "type": "String"
+      }
+  }
+}
