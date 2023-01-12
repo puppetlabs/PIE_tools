@@ -6,8 +6,12 @@ curl "https://puppetdev.service-now.com/api/sn_chg_rest/v1/change" \
 --header "Content-Type: application/json" \
 --data '
 {
-"short_desription": "Reboot server on scheduled interval",
+"short_description": "Reboot server on scheduled interval",
 "description":"This is the long description. Its reallllly long like.",
 "assigned_to":"greg.hardy",
+"service_offering":"example example",
+"business_service":"purple red blue",
+"justification":"blehhhhhhhhh",
+"backout_plan":"pepepepepepepe"
 }' \
 --user "greg.hardy":"gs1NUhQgIb7S"
