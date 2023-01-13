@@ -1,14 +1,24 @@
 #!/bin/bash
 
-SYS_ID=$1
+OAUTH_TOKEN=$1
+SYS_ID=$2
+
+usage(){
+  echo "usage: $0 [oauth_token] [sys_id_change_record]"
+}
+
+if [[ -z "${OAUTH_TOKEN}" ]];then
+  usage
+  exit 2
+fi 
 
 if [[ -z "${SYS_ID}" ]];then
-  echo "usage: $0 [sys_id_change_record]"
+  usage
   exit 2
-fi
+fi 
 
-#curl "https://puppetdev.service-now.com/api/sn_chg_rest/v1/change/d5e264751b94251097bf55351a4bcb2d" \
 curl "https://puppetdev.service-now.com/api/sn_chg_rest/v1/change/${SYS_ID}" \
 --request DELETE \
 --header "Accept: application/json" \
---user "greg.hardy":"gs1NUhQgIb7S"
+--header "Authorization: Bearer ${OAUTH_TOKEN}"
+
