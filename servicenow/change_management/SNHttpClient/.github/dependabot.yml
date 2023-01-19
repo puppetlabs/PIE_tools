@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    labels:
+      - 'dependencies'
+    open-pull-requests-limit: 3
+    pull-request-branch-name:
+      separator: '-'
+    reviewers:
+      - '@puppetlabs/compliance'
+    schedule:
+      interval: daily
+      time: '03:00'
+  - package-ecosystem: gomod
+    directory: /
+    labels:
+      - 'dependencies'
+    open-pull-requests-limit: 3
+    pull-request-branch-name:
+      separator: '-'
+    reviewers:
+      - '@puppetlabs/compliance'
+    schedule:
+      interval: daily
+      time: '03:00'

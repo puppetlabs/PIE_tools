@@ -1,0 +1,25 @@
+{
+    "xmlTools.splitAttributesOnFormat": true,
+    "go.useLanguageServer": true,
+    "go.lintTool":"golangci-lint",
+    "go.lintFlags": ["--enable-all", "--exclude-use-default=false", "--fast"],
+    "go.testOnSave": true,
+    "go.lintOnSave": "package",
+    "go.testFlags": ["-cover", "-v"],
+    "go.coverOnSave": false,
+    "go.coverageOptions": "showBothCoveredAndUncoveredCode",
+    "go.coverOnTestPackage": true,
+    "go.coverOnSingleTest": true,
+    "go.formatTool": "goimports",
+    "go.vetOnSave": "workspace",
+    "go.testEnvVars" : {
+        "SCARP_CONFIG_FILE": "../config/config.yaml",
+        "SCARP_ENV": "dev",
+      },
+    "go.delveConfig": {
+        "dlvLoadConfig": {
+            "maxStringLen": 1024,
+        },
+        "apiVersion": 2,
+    },
+}

@@ -1,0 +1,88 @@
+name: Image analysis and sec scan
+
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+  workflow_dispatch:
+
+jobs:
+  scarp-image-vul-scan:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set image tag
+        run: |
+          echo "IMAGE_TAG=test-$(echo "${{ github.sha }}")" >> $GITHUB_ENV
+      - name: Build the Docker images
+        run: |
+          make SHA="${{ env.IMAGE_TAG }}" image
+      - name: Run vulnerability scanner on scarp image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "artifactory.delivery.puppetlabs.net/compliance/scarp:${{ env.IMAGE_TAG }}"
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          severity: "CRITICAL,HIGH"
+      - name: Tidy up
+        if: always()
+        run: |
+          docker image rm artifactory.delivery.puppetlabs.net/compliance/scarp:${{ env.IMAGE_TAG }}
+  hasura-image-vul-scan:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set image tag
+        run: |
+          echo "IMAGE_TAG=test-$(echo "${{ github.sha }}")" >> $GITHUB_ENV
+      - name: Build the Docker images
+        run: |
+          make SHA="${{ env.IMAGE_TAG }}" hasura-graphql-engine_image
+      - name: Run vulnerability scanner on hasura-graphql-engine image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "artifactory.delivery.puppetlabs.net/compliance/hasura-graphql-engine:${{ env.IMAGE_TAG }}"
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          severity: "CRITICAL,HIGH"
+      - name: Tidy up
+        if: always()
+        run: |
+          docker image rm artifactory.delivery.puppetlabs.net/compliance/hasura-graphql-engine:${{ env.IMAGE_TAG }}
+  hasura-metadata-image-vul-scan:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set image tag
+        run: |
+          echo "IMAGE_TAG=hasura-metadata-$(echo "${{ github.sha }}")" >> $GITHUB_ENV
+      - name: Build the Docker images
+        run: |
+          make SHA="${{ env.IMAGE_TAG }}" hasura-metadata_image
+      - name: Run vulnerability scanner on hasura-metadata_image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "artifactory.delivery.puppetlabs.net/compliance/hasura-metadata:${{ env.IMAGE_TAG }}"
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          severity: "CRITICAL,HIGH"
+      - name: Tidy up
+        if: always()
+        run: |
+          docker image rm artifactory.delivery.puppetlabs.net/compliance/hasura-metadata:${{ env.IMAGE_TAG }}
+  snyk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/golang@master
+        with:
+          command: monitor
+          args: --org=puppet-comply --project-name=${{ github.repository }}
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_COMPLY_KEY }}
