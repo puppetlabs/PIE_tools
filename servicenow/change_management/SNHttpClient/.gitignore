@@ -1,0 +1,47 @@
+# Created by .ignore support plugin (hsz.mobi)
+### VisualStudioCode template
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*code-workspace
+__debug_bin
+
+### Eclipse
+.project
+
+### JetBrains
+.idea/
+cover.out
+cover.html
+coverage.html
+server.crt
+server.key
+
+# macOS
+.DS_Store
+
+volumes/
+cover.out
+
+### script helpers
+scripts/data/Assessor-CLI
+coverage.txt
+
+### Logging
+*.log
+scripts/*.log
+
+scarp
+scarp.pid
+
+scarp_hotreload
+scarp_hotreload.pid
+
+coverage.out
+
+### benchmarks
+Assessor-CLI/
+
+.user-dev.env

@@ -1,0 +1,143 @@
+{
+  //  Basic launchers for SCARP commands.
+  // to debug pass the arguments you want in to args
+  // e.g. ["convert", "benchmark", "-f", "cis-facts", "-e", "yaml", "--loglevel", "debug", ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+        "name": "Debug SCARP Hot",
+        "type": "go",
+        "request": "attach",
+        "mode": "local",
+        "showLog": true,
+        "processId": "${input:scarp_pid}"
+    },
+    {
+        "name": "Test Current File",
+        "type": "go",
+        "request": "launch",
+        "mode": "test",
+        "remotePath": "",
+        "port": 2345,
+        "host": "127.0.0.1",
+        "program": "${file}",
+        "args": [],
+        "showLog": true
+    },
+    {
+      "name": "SCARP API",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {"SCARP_CONFIG_FILE":"config/config.yaml", "POSTGRES_PASSWORD":"compliance", "POSTGRES_HOSTNAME":"localhost", "SCARP_ENV":"dev", "PEPPER":"MyC00lP3pp3R", "PE_SKIP_TLS_CHECK":"true"},
+      "args": ["api", "--unsafe", "--loglevel", "debug"]
+    },
+    {
+      "name": "SCARP Store Report",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {"SCARP_CONFIG_FILE":"config/config.yaml", "POSTGRES_PASSWORD":"compliance", "POSTGRES_HOSTNAME":"localhost"},
+      "args": ["store", "report", "--format", "ciscat",  "../fixdemo/reports/ciscat/ciscat-RHEL7-CIS.xml"]
+    },
+    {
+      "name": "SCARP store init",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {"SCARP_CONFIG_FILE":"config/config.yaml", "POSTGRES_PASSWORD":"compliance", "POSTGRES_HOSTNAME":"localhost"},
+      "args": ["store", "init"]
+    },
+    {
+      "name": "SCARP config",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {"SCARP_CONFIG_FILE":"config/config.yaml", "POSTGRES_PASSWORD":"compliance", "POSTGRES_HOSTNAME":"localhost"},
+      "args": ["config", "--help"]
+    },
+    {
+      "name": "SCARP convert benchmark",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {"SCARP_CONFIG_FILE":"config/config.yaml", "POSTGRES_PASSWORD":"compliance", "POSTGRES_HOSTNAME":"localhost"},
+      "args": ["convert", "benchmark", "--help" ]
+    },
+    {
+      "name": "SCARP events listen",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {"SCARP_CONFIG_FILE":"config/config.yaml", "POSTGRES_PASSWORD":"compliance", "POSTGRES_HOSTNAME":"localhost"},
+      "args": ["events", "listen", "--help"]
+    },
+    {
+      "name": "SCARP pe_inventory",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {"SCARP_CONFIG_FILE":"config/config.yaml", "POSTGRES_PASSWORD":"compliance", "POSTGRES_HOSTNAME":"localhost"},
+      "args": ["pe_inventory", "--help"]
+    },
+    {
+      "name": "SCARP report send",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {"SCARP_CONFIG_FILE":"config/config.yaml", "POSTGRES_PASSWORD":"compliance", "POSTGRES_HOSTNAME":"localhost"},
+      "args": ["report", "send", "--help"]
+    },
+    {
+      "name": "SCARP store benchmark RH7",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {"SCARP_CONFIG_FILE":"config/config.yaml", "POSTGRES_PASSWORD":"compliance", "POSTGRES_HOSTNAME":"localhost"},
+      "args": ["store", "benchmark", "benchmarks/4.0.23/CIS_Red_Hat_Enterprise_Linux_7_Benchmark_v3.0.0-xccdf.xml"]
+    },
+    {
+      "name": "SCARP task",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {"SCARP_CONFIG_FILE":"config/config.yaml", "POSTGRES_PASSWORD":"compliance", "POSTGRES_HOSTNAME":"localhost"},
+      "args": ["task", "--help"]
+    },
+    {
+      "name": "SCARP version",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {"SCARP_CONFIG_FILE":"config/config.yaml", "POSTGRES_PASSWORD":"compliance", "POSTGRES_HOSTNAME":"localhost"},
+      "args": ["version"]
+    },
+    {
+      "name": "SCARP watcher",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "env": {"SCARP_CONFIG_FILE":"config/config.yaml"},
+      "args": ["watcher", "benchmarks", "--interval", "1"]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "scarp_pid",
+      "type": "promptString",
+      "description": "The current PID for SCARP"
+    }
+  ]
+}

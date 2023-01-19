@@ -1,0 +1,59 @@
+name: Create Release
+on:
+  push:
+    tags:
+      - v*-rc*
+
+jobs:
+  build:
+    name: Build
+    runs-on: self-hosted
+    steps:
+      - name: Set up Go 1.18
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+        id: go
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v3
+      - name: Extract tag name
+        shell: bash
+        run: echo "##[set-output name=tag;]$(echo ${GITHUB_REF#refs/tags/})"
+        id: extract_tag
+      - name: Build the Docker image
+        shell: bash
+        run: |
+          TAG=${{ steps.extract_tag.outputs.tag }}
+          echo "running on tag $TAG"
+          make SHA="$(git rev-parse --short ${GITHUB_SHA})" DOCKER_TAG=$TAG image
+          make SHA="$(git rev-parse --short ${GITHUB_SHA})" DOCKER_TAG=$TAG scarp-init_image
+          make SHA="$(git rev-parse --short ${GITHUB_SHA})" DOCKER_TAG=$TAG hasura-metadata_image
+          make SHA="$(git rev-parse --short ${GITHUB_SHA})" DOCKER_TAG=$TAG hasura-graphql-engine_image
+      - name: Push image to artifactory
+        shell: bash
+        env:
+          GCR_CREDS: ${{ secrets.GCR_PLATFORM_SERVICES_SERVICE_ACCOUNT }}
+          CREDS: ${{ secrets.artifactory_creds }}
+        run: |
+          TAG=${{ steps.extract_tag.outputs.tag }}
+          echo "running on tag $TAG"
+          make SHA="$(git rev-parse --short ${GITHUB_SHA})" DOCKER_TAG=$TAG publish
+          make SHA="$(git rev-parse --short ${GITHUB_SHA})" DOCKER_TAG=$TAG APP_NAME=scarp-init publish
+          make SHA="$(git rev-parse --short ${GITHUB_SHA})" DOCKER_TAG=$TAG APP_NAME=hasura-metadata publish
+          make SHA="$(git rev-parse --short ${GITHUB_SHA})" DOCKER_TAG=$TAG APP_NAME=hasura-graphql-engine publish
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Restart pod in unstable demo env
+        run: |
+          if [ ${GITHUB_REF##*/} = "master" ]; then
+            curl -X POST ${{ secrets.UNSTABLE_URL }} -H "Content-Type: application/json"  -H "Authorization: Bearer ${{ secrets.UNSTABLE_TOKEN }}" -d "{\"images\":[\"scarp\", \"scarp-init\", \"hasura-metadata\", \"hasura-graphql-engine\"]}" --insecure
+          fi
+        shell: bash
