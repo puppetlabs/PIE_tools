@@ -1,2 +1,0 @@
-ARM64=1
-HASURA_IMAGE=hasura/graphql-engine:v2.1.1.arm64
