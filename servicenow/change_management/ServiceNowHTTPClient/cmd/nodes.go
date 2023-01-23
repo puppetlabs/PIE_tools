@@ -1,11 +1,13 @@
 package cmd
 
 import (
-	"fmt"
-	"net/http"
 	"bytes"
-	"io/ioutil"
+	"encoding/json"
+	"fmt"
 	"github.com/spf13/cobra"
+	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 // initCmd is a subcommand to StoreCmd that ads a Benchmark to the store.
@@ -36,26 +38,40 @@ var nodesCmd = &cobra.Command{
 // ScannerVersion is the version of the scanner associated with the benchmark.
 
 func init() {
-	// nodesCmd.PersistentFlags().StringP("endpoint", "e", "", "FQDN of the SN instance")
-	// nodesCmd.MarkPersistentFlagRequired("endpoint")
-	// nodesCmd.PersistentFlags().StringP("username", "u", "", "Username for the SN instance")
-	// nodesCmd.MarkPersistentFlagRequired("username")
-	// nodesCmd.PersistentFlags().StringP("password", "p", "", "Password for the SN instance")
-	// nodesCmd.MarkPersistentFlagRequired("password")
 }
 
-func GetRecord(endpoint string, username string, password string) string {
+type Result struct {
+	Result []struct {
+		Certname string `json:"fqdn"`
+		SysID    string `json:"sys_id"`
+	} `json:"result"`
+}
+
+func GetRecord(endpoint string, username string, password string) map[string]string {
 	client := &http.Client{}
 	body := []byte(`{
 	"short_description": "Get record"
 }`)
 	req, err := http.NewRequest("GET", endpoint, bytes.NewBuffer(body))
+	if err != nil {
+		log.Fatal(err)
+	}
 	req.SetBasicAuth(username, password)
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err)
 	}
 	bodyText, err := ioutil.ReadAll(resp.Body)
-	x := string(bodyText)
-	return x
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var data Result
+	json.Unmarshal([]byte(bodyText), &data)
+	resultMap := make(map[string]string)
+	for _, v := range data.Result {
+		resultMap[string(v.Certname)] = string(v.SysID)
+		fmt.Printf("Certname: %s, SysID: %s\n", v.Certname, v.SysID)
+	}
+	return resultMap
 }
