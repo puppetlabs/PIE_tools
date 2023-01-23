@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"strings"
-
+	"net/http"
+	"bytes"
+	"io/ioutil"
 	"github.com/spf13/cobra"
 )
 
@@ -17,14 +18,14 @@ var nodesCmd = &cobra.Command{
 	  SNHttpClient get nodes <endpoint> <username> <password>
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("BOOM getting nodes!!")
-		fmt.Println("You're arguments were: [" + strings.Join(args, ",") + "]")
+		fmt.Println("Sending Get request")
 		endpoint, _ := cmd.Flags().GetString("endpoint")
 		fmt.Println("Endpoint: " + endpoint)
 		username, _ := cmd.Flags().GetString("username")
 		fmt.Println("Username: " + username)
 		password, _ := cmd.Flags().GetString("password")
 		fmt.Println("Password: " + password)
+		fmt.Println(GetRecord(endpoint, username, password))
 	},
 
 	Args: func(cmd *cobra.Command, args []string) error {
@@ -41,4 +42,20 @@ func init() {
 	// nodesCmd.MarkPersistentFlagRequired("username")
 	// nodesCmd.PersistentFlags().StringP("password", "p", "", "Password for the SN instance")
 	// nodesCmd.MarkPersistentFlagRequired("password")
+}
+
+func GetRecord(endpoint string, username string, password string) string {
+	client := &http.Client{}
+	body := []byte(`{
+	"short_description": "Get record"
+}`)
+	req, err := http.NewRequest("GET", endpoint, bytes.NewBuffer(body))
+	req.SetBasicAuth(username, password)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+	}
+	bodyText, err := ioutil.ReadAll(resp.Body)
+	x := string(bodyText)
+	return x
 }

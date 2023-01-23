@@ -22,7 +22,7 @@ var changeCmd = &cobra.Command{
 		password, _ := cmd.Flags().GetString("password")
 
 		fmt.Println("Creating Change in SN... ")
-		response := internal.CreateChanage(endpoint, username, password)
+		response := internal.CreateChange(endpoint, username, password)
 		internal.ParseChange(response)
 	},
 
