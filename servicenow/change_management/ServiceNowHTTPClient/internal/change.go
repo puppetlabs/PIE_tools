@@ -7,7 +7,7 @@ import (
 )
 
 // CreateChanage POST change create to ServiceNow
-func CreateChanage(host string, username string, password string) string {
+func CreateChange(host string, username string, password string) string {
 	URL := "https://" + host + "/api/sn_chg_rest/v1/change"
 	body := []byte(`{
 		"short_description": "Reboot server on scheduled interval"
@@ -18,6 +18,16 @@ func CreateChanage(host string, username string, password string) string {
 	str := HTTPAction("POST", URL, body, username, password)
 	return str
 }
+
+func GetChange(host string, username string, password string) string {
+	URL := "https://" + host + "/api/sn_chg_rest/v1/change?sys_created_by=" + username
+	body := []byte(`{
+		"short_description": "Get record"
+	}`)	
+	str := HTTPAction("GET", URL, body, username, password)
+	return str
+}
+
 
 // Post POST data to ServiceNow
 func ParseChange(result string) string {
