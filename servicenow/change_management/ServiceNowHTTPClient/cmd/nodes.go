@@ -1,13 +1,12 @@
 package cmd
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
+
+	"github.com/puppetlabs/SNHttpClient/internal"
 	"github.com/spf13/cobra"
-	"io/ioutil"
-	"log"
-	"net/http"
+	"github.com/spf13/viper"
 )
 
 // initCmd is a subcommand to StoreCmd that ads a Benchmark to the store.
@@ -21,13 +20,11 @@ var nodesCmd = &cobra.Command{
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Sending Get request")
-		endpoint, _ := cmd.Flags().GetString("endpoint")
-		fmt.Println("Endpoint: " + endpoint)
-		username, _ := cmd.Flags().GetString("username")
-		fmt.Println("Username: " + username)
-		password, _ := cmd.Flags().GetString("password")
-		fmt.Println("Password: " + password)
-		fmt.Println(GetRecord(endpoint, username, password))
+		endpoint := viper.GetString("endpoint")
+		username := viper.GetString("username")
+		password := viper.GetString("password")
+
+		GetRecord(endpoint, username, password)
 	},
 
 	Args: func(cmd *cobra.Command, args []string) error {
@@ -40,6 +37,7 @@ var nodesCmd = &cobra.Command{
 func init() {
 }
 
+// Result is the struct for the JSON response from the SN CMDB
 type Result struct {
 	Result []struct {
 		Certname string `json:"fqdn"`
@@ -47,27 +45,18 @@ type Result struct {
 	} `json:"result"`
 }
 
+// GetRecord gets a record from the SN CMDB
 func GetRecord(endpoint string, username string, password string) map[string]string {
-	client := &http.Client{}
 	body := []byte(`{
-	"short_description": "Get record"
-}`)
-	req, err := http.NewRequest("GET", endpoint, bytes.NewBuffer(body))
-	if err != nil {
-		log.Fatal(err)
-	}
-	req.SetBasicAuth(username, password)
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-	bodyText, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
+		"short_description": "Get record"
+	}`)
+
+	URL := "https://" + endpoint + "/api/now/table/cmdb_ci_computer?sysparm_query=active=true&sysparm_fields=fqdn,sys_id"
+
+	result := internal.HTTPAction("GET", URL, body, username, password)
 
 	var data Result
-	json.Unmarshal([]byte(bodyText), &data)
+	json.Unmarshal([]byte(result), &data)
 	resultMap := make(map[string]string)
 	for _, v := range data.Result {
 		resultMap[string(v.Certname)] = string(v.SysID)

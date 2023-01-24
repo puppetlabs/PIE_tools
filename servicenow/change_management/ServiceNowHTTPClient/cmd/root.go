@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/puppetlabs/SNHttpClient/config"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var cfgFile string
 
-// RootCmd represents the base command when called without any subcommands.
-var RootCmd = &cobra.Command{
+// rootCmd represents the base command when called without any subcommands.
+var rootCmd = &cobra.Command{
 	Use:   "SNHttpClient",
 	Short: "A utility for sending HTTP requests to the SN API",
 	Long: `A utility for sending HTTP requests to the SN API.
@@ -28,7 +30,7 @@ var RootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	if err := RootCmd.Execute(); err != nil {
+	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
@@ -37,19 +39,45 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	// // Cobra also supports local flags, which will only run
-	// // when this action is called directly.
-	// RootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	configFile := ".cobra.yaml"
+	viper.SetConfigType("yaml")
+	viper.SetConfigFile(configFile)
 
-	// support persisted flags - global for this application and allow giving config file as option
-	RootCmd.PersistentFlags().StringP("endpoint", "e", "", "FQDN of the SN instance")
-	RootCmd.MarkPersistentFlagRequired("endpoint")
-	RootCmd.PersistentFlags().StringP("username", "u", "", "Username for the SN instance")
-	RootCmd.MarkPersistentFlagRequired("username")
-	RootCmd.PersistentFlags().StringP("password", "p", "", "Password for the SN instance")
-	RootCmd.MarkPersistentFlagRequired("password")
+	if err := viper.ReadInConfig(); err == nil {
+		fmt.Println("Using configuration file: ", viper.ConfigFileUsed())
+	}
+
+	viper.AutomaticEnv()
+
+	var configuration config.Config
+
+	if err := viper.ReadInConfig(); err != nil {
+		fmt.Printf("Error reading config file, %s", err)
+	}
+
+	err := viper.Unmarshal(&configuration)
+	if err != nil {
+		fmt.Printf("Unable to decode into struct, %v", err)
+	}
+
 }
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+
+	// Search config in home directory with name ".cobra" (without extension).
+	viper.AddConfigPath(".")
+	viper.SetConfigName(".cobra.yaml")
+
+	if err := viper.ReadInConfig(); err != nil {
+		fmt.Println("Can't read config:", err)
+		os.Exit(1)
+	}
+}
+
+// HandleError is a helper function to handle errors
+func HandleError(e error) {
+	if e != nil {
+		fmt.Println(e)
+	}
 }
