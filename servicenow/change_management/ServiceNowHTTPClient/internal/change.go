@@ -3,6 +3,8 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/tidwall/gjson"
 )
 
 type result struct {
@@ -12,13 +14,13 @@ type result struct {
 		}
 		SysID struct {
 			DisplayValue string `json:"display_value"`
-		}
+		} `json:"sys_id"`
 		SysCreatedBy struct {
 			DisplayValue string `json:"display_value"`
-		}
+		} `json:"sys_created_by"`
 		Phase struct {
 			DisplayValue string `json:"display_value"`
-		}
+		} `json:"phase"`
 		Impact struct {
 			DisplayValue string `json:"display_value"`
 		}
@@ -33,13 +35,13 @@ type result struct {
 		}
 		UponApproval struct {
 			DisplayValue string `json:"display_value"`
-		}
+		} `json:"upon_approval"`
 		ProductionSystem struct {
 			DisplayValue string `json:"display_value"`
-		}
+		} `json:"production_system"`
 		SysCreatedOn struct {
 			DisplayValue string `json:"display_value"`
-		}
+		} `json:"sys_created_on"`
 	} `json:"result"`
 }
 
@@ -50,6 +52,10 @@ func CreateChanage(host string, body []byte, username string, password string) s
 	fmt.Println("Post URL=" + URL + " body=" + string(body))
 
 	str := HTTPAction("POST", URL, body, username, password)
+	fmt.Println(str)
+
+	value := gjson.Get(str, "result.name.display_value")
+	fmt.Println("Change Number: " + value.String())
 	return str
 }
 
@@ -74,17 +80,18 @@ func ParseChange(responseBody string) map[string]string {
 	for _, v := range data.Result {
 		resultMap["Number"] = v.Number.DisplayValue
 		resultMap["SysID"] = v.SysID.DisplayValue
-		resultMap["SysCreatedBy"] = v.SysCreatedBy.DisplayValue
-		resultMap["Phase"] = v.Phase.DisplayValue
-		resultMap["Impact"] = v.Impact.DisplayValue
-		resultMap["Priority"] = v.Priority.DisplayValue
-		resultMap["Urgency"] = v.Urgency.DisplayValue
-		resultMap["Approval"] = v.Approval.DisplayValue
-		resultMap["UponApproval"] = v.UponApproval.DisplayValue
-		resultMap["ProductionSystem"] = v.ProductionSystem.DisplayValue
-		resultMap["SysCreatedOn"] = v.SysCreatedOn.DisplayValue
 
-		fmt.Println("Change: ", v.Number.DisplayValue)
+		// resultMap["SysCreatedBy"] = v.SysCreatedBy.DisplayValue
+		// resultMap["Phase"] = v.Phase.DisplayValue
+		// resultMap["Impact"] = v.Impact.DisplayValue
+		// resultMap["Priority"] = v.Priority.DisplayValue
+		// resultMap["Urgency"] = v.Urgency.DisplayValue
+		// resultMap["Approval"] = v.Approval.DisplayValue
+		// resultMap["UponApproval"] = v.UponApproval.DisplayValue
+		// resultMap["ProductionSystem"] = v.ProductionSystem.DisplayValue
+		// resultMap["SysCreatedOn"] = v.SysCreatedOn.DisplayValue
+
+		fmt.Println("Change: ", v.Number.DisplayValue, " SysID: ", v.SysID.DisplayValue)
 	}
 
 	return resultMap
