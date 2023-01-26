@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	
 	"github.com/spf13/cobra"
 )
 
@@ -16,7 +15,7 @@ var getCmd = &cobra.Command{
 	  SNHttpClient get <action>
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
-		
+
 	},
 
 	Args: func(cmd *cobra.Command, args []string) error {
@@ -27,7 +26,7 @@ var getCmd = &cobra.Command{
 // ScannerVersion is the version of the scanner associated with the benchmark.
 
 func init() {
-	RootCmd.AddCommand(getCmd)
+	rootCmd.AddCommand(getCmd)
 	getCmd.AddCommand(nodesCmd)
 	getCmd.AddCommand(getChangeCommand)
 }

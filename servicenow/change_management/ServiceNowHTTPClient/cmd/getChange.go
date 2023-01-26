@@ -3,8 +3,10 @@ package cmd
 import (
 	"fmt"
 	"strings"
+
 	"github.com/puppetlabs/SNHttpClient/internal"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 //getChangeCommand gets all changes from CMDB by user
@@ -14,28 +16,25 @@ var getChangeCommand = &cobra.Command{
 	Long: `Gets a Change object from the SN CMDB by user'
 
 	Example usage:
-	  SNHttpClient get change -e <endpoint>  -u <username> -p <password>
+	  SNHttpClient get change <user>
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("You're arguments were: [" + strings.Join(args, ",") + "]")
-		endpoint, _ := cmd.Flags().GetString("endpoint")
-		fmt.Println("Endpoint: " + endpoint)
-		username, _ := cmd.Flags().GetString("username")
-		fmt.Println("Username: " + username)
-		password, _ := cmd.Flags().GetString("password")
-		fmt.Println("Password: " + password)
+		endpoint := viper.GetString("endpoint")
+		username := viper.GetString("username")
+		password := viper.GetString("password")
 
-		str := internal.GetChange(endpoint, username, password)
-		result := internal.ParseChange(str)
-		fmt.Println(result)
+		fmt.Print("endpoint=", endpoint+
+			" username=", username+
+			" password=", password+"\n")
 
+		internal.GetChange(endpoint, username, password)
 	},
 
 	Args: func(cmd *cobra.Command, args []string) error {
 		return nil
 	},
 }
-
 
 func init() {
 

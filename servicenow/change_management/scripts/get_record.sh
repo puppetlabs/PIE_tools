@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 OAUTH_TOKEN=$1
 SYS_ID=$2
@@ -17,8 +17,14 @@ if [[ -z "${SYS_ID}" ]];then
   exit 2
 fi 
 
-curl "https://puppetdev.service-now.com/api/sn_chg_rest/v1/change/${SYS_ID}" \
+USERNAME=$1
+PASSWORD=$2
+
+#--header "Authorization: Bearer ${OAUTH_TOKEN}" \
+
+#curl "https://puppetdev.service-now.com/api/sn_chg_rest/v1/change/${SYS_ID}" \
+curl "https://puppetdev.service-now.com/api/sn_chg_rest/v1/change?sys_created_by=greg.hardy" \
 --request GET \
 --header "Accept: application/json" \
---header "Authorization: Bearer ${OAUTH_TOKEN}" \
+--user "${USERNAME}":"${PASSWORD}"
 

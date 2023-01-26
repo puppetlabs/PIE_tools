@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/puppetlabs/SNHttpClient/internal"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // initCmd is a subcommand to StoreCmd that ads a Benchmark to the store.
@@ -17,14 +19,25 @@ var relationshipCmd = &cobra.Command{
 	  SNHttpClient create relationship <endpoint> <username> <password>
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("BOOM creating your relationship!!")
 		fmt.Println("You're arguments were: [" + strings.Join(args, ",") + "]")
-		endpoint, _ := cmd.Flags().GetString("endpoint")
-		fmt.Println("Endpoint: " + endpoint)
-		username, _ := cmd.Flags().GetString("username")
-		fmt.Println("Username: " + username)
-		password, _ := cmd.Flags().GetString("password")
-		fmt.Println("Password: " + password)
+		endpoint := viper.GetString("endpoint")
+		username := viper.GetString("username")
+		password := viper.GetString("password")
+
+		if len(args) < 2 {
+			fmt.Println("You must provide a changeID and node Node SysID")
+			fmt.Println("Example: SNHttpClient create relationship 1234567890abcdef1234567890abcdef 1234567890abcdef1234567890abcdef")
+			return
+		}
+
+		changeSysID := args[0]
+		nodeSysID := args[1]
+
+		fmt.Print("endpoint=", endpoint+
+			" username=", username+
+			" password=", password+"\n")
+
+		internal.CreateRelationship(endpoint, changeSysID, nodeSysID, username, password)
 	},
 
 	Args: func(cmd *cobra.Command, args []string) error {

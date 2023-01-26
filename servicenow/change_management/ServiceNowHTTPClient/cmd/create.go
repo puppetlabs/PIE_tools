@@ -32,7 +32,7 @@ var createCmd = &cobra.Command{
 // ScannerVersion is the version of the scanner associated with the benchmark.
 
 func init() {
-	RootCmd.AddCommand(createCmd)
+	rootCmd.AddCommand(createCmd)
 	createCmd.AddCommand(changeCmd)
 	createCmd.AddCommand(relationshipCmd)
 }
