@@ -7,6 +7,11 @@ import (
 	"github.com/tidwall/gjson"
 )
 
+type ChangeResult struct {
+	Name  string
+	SysID string
+}
+
 type result struct {
 	Result []struct {
 		Number struct {
@@ -45,18 +50,17 @@ type result struct {
 	} `json:"result"`
 }
 
-// CreateChanage POST change create to ServiceNow
-func CreateChanage(host string, body []byte, username string, password string) string {
+// CreateChange POST change create to ServiceNow
+func CreateChange(host string, body []byte, username string, password string) ChangeResult {
 	URL := "https://" + host + "/api/sn_chg_rest/v1/change"
 
 	fmt.Println("Post URL=" + URL + " body=" + string(body))
 
 	str := HTTPAction("POST", URL, body, username, password)
-	fmt.Println(str)
-
-	value := gjson.Get(str, "result.name.display_value")
-	fmt.Println("Change Number: " + value.String())
-	return str
+	var resultChange ChangeResult
+	resultChange.Name = gjson.Get(str, "result.number.display_value").String()
+	resultChange.SysID = gjson.Get(str, "result.sys_id.display_value").String()
+	return resultChange
 }
 
 // GetChange GET change by user from ServiceNow
