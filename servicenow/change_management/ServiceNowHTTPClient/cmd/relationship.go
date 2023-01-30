@@ -19,7 +19,7 @@ var relationshipCmd = &cobra.Command{
 	  SNHttpClient create relationship <endpoint> <username> <password>
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("You're arguments were: [" + strings.Join(args, ",") + "]")
+		fmt.Println("Your arguments were: [" + strings.Join(args, ",") + "]")
 		endpoint := viper.GetString("endpoint")
 		username := viper.GetString("username")
 		password := viper.GetString("password")

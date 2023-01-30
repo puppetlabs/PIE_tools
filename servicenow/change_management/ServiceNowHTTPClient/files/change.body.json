@@ -1,3 +1,4 @@
 {
-		"short_description": "Reboot server on scheduled interval"
+		"short_description": "Reboot server on scheduled interval",
+		"assignment_group":  "Puppet Employees"
 }

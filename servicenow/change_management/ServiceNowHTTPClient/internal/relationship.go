@@ -47,7 +47,7 @@ type changeResult struct {
 func CreateRelationship(host string, changeSysID string, nodeSysID string, username string, password string) string {
 	URL := "https://" + host + "/api/sn_chg_rest/v1/change/" + changeSysID + "/ci"
 	body := []byte(`{
-		"cmdb_ci_sys_ids": "` + nodeSysID + `",
+		"cmdb_ci_sys_ids": "[` + nodeSysID + `]",
 		"association_type": "affected"
 	}`)
 

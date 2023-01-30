@@ -33,8 +33,8 @@ var changeCmd = &cobra.Command{
 		body := internal.GetBody(filename)
 
 		fmt.Println("Creating Change in SN... with body from file: " + filename)
-		response := internal.CreateChanage(endpoint, body, username, password)
-		internal.ParseChange(response)
+		response := internal.CreateChange(endpoint, body, username, password)
+		fmt.Println("created change ID = ", response.Name, " sys_id =", response.SysID)
 	},
 
 	Args: func(cmd *cobra.Command, args []string) error {

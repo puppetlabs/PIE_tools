@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-//getChangeCommand gets all changes from CMDB by user
+// getChangeCommand gets all changes from CMDB by user
 var getChangeCommand = &cobra.Command{
 	Use:   "change",
 	Short: "Gets a Change object from the SN CMDB by user",
@@ -19,7 +19,7 @@ var getChangeCommand = &cobra.Command{
 	  SNHttpClient get change <user>
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("You're arguments were: [" + strings.Join(args, ",") + "]")
+		fmt.Println("Your arguments were: [" + strings.Join(args, ",") + "]")
 		endpoint := viper.GetString("endpoint")
 		username := viper.GetString("username")
 		password := viper.GetString("password")
