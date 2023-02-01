@@ -56,7 +56,7 @@ func CreateChange(host string, body []byte, username string, password string) Ch
 
 	fmt.Println("Post URL=" + URL + " body=" + string(body))
 
-	str := HTTPActionToFile("POST", URL, body, username, password, "change.json")
+	str := HTTPAction("POST", URL, body, username, password)
 	var resultChange ChangeResult
 
 	resultChange.Name = gjson.Get(str, "result.number.display_value").String()
