@@ -21,3 +21,18 @@ func HTTPAction(operation string, URL string, body []byte, username string, pass
 	s := string(bodyText)
 	return s
 }
+
+func HTTPActionToFile(operation string, URL string, body []byte, username string, password string, filename string) string {
+	client := &http.Client{}
+
+	req, err := http.NewRequest(operation, URL, bytes.NewBuffer(body))
+	req.SetBasicAuth(username, password)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+	}
+	bodyText, err := ioutil.ReadAll(resp.Body)
+	s := string(bodyText)
+	err = ioutil.WriteFile(filename, []byte(s), 0644)
+	return s
+}
