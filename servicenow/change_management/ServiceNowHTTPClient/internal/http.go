@@ -27,13 +27,13 @@ func HTTPAction(operation string, URL string, body []byte, username string, pass
 }
 
 func writeActionToFile(operation string, URL string, body []byte) {
-	LogActions := viper.GetString("LogActions")
-	if LogActions == "false" {
+	LogActions := viper.GetBool("Logging.ToFile")
+	if LogActions == false {
 		return
 	}
 
-	LogFileName := viper.GetString("LogFileName")
-	if LogFileName == "" {
+	LogFileName := viper.GetString("Logging.Filename")
+	if LogActions == true && LogFileName == "" {
 		panic("LogFileName not set")
 	}
 
