@@ -27,6 +27,7 @@ func HTTPAction(operation string, URL string, body []byte, username string, pass
 	return s
 }
 
+// writeActionToFile writes changes to json file
 func writeActionToFile(operation string, URL string, body []byte) {
 	LogActions := viper.GetBool("Logging.ToFile")
 	if LogActions == false {
