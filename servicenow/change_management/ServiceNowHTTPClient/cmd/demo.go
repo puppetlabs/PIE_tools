@@ -30,7 +30,7 @@ var demoCmd = &cobra.Command{
 
 		if len(args) < 1 {
 			fmt.Println("Error: No body filepath specified as an argument")
-			fmt.Println("Usage: SNHttpClient create change <filepath to body>")
+			fmt.Println("Usage: SNHttpClient run demo <filepath to body>")
 			os.Exit(1)
 		}
 

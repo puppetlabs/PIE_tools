@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// initCmd is a subcommand to StoreCmd that ads a Benchmark to the store.
+// deleteCmd runs a delete action
 var deleteCmd = &cobra.Command{
 	Use:   "delete",
 	Short: "Gets an object from the SN CMDB",
@@ -22,10 +22,6 @@ var deleteCmd = &cobra.Command{
 		return nil
 	},
 }
-
-//var runCmd = &cobra.Command{fmt.Println("This is run running")}
-
-// ScannerVersion is the version of the scanner associated with the benchmark.
 
 func init() {
 	rootCmd.AddCommand(deleteCmd)
