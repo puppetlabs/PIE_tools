@@ -19,6 +19,7 @@ func HTTPAction(operation string, URL string, body []byte, username string, pass
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println(err)
+		panic(err)
 	}
 	bodyText, err := ioutil.ReadAll(resp.Body)
 	s := string(bodyText)

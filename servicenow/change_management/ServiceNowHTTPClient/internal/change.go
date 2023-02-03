@@ -74,6 +74,15 @@ func GetChange(host string, username string, password string) map[string]string 
 	return ParseChange(str)
 }
 
+// DeleteChange DELETE change by sysID from ServiceNow
+func DeleteChange(host string, sysID string, username string, password string) {
+	URL := "https://" + host + "/api/sn_chg_rest/v1/change/" + sysID
+	body := []byte(`{
+		"short_description": "Delete record"
+	}`)
+	HTTPAction("DELETE", URL, body, username, password)
+}
+
 // ParseChange parses the JSON response from ServiceNow
 func ParseChange(responseBody string) map[string]string {
 
@@ -83,18 +92,10 @@ func ParseChange(responseBody string) map[string]string {
 
 	fmt.Println("number of Changes matching user: ", len(data.Result))
 	for _, v := range data.Result {
-		resultMap["Number"] = v.Number.DisplayValue
-		resultMap["SysID"] = v.SysID.DisplayValue
-
-		// resultMap["SysCreatedBy"] = v.SysCreatedBy.DisplayValue
-		// resultMap["Phase"] = v.Phase.DisplayValue
-		// resultMap["Impact"] = v.Impact.DisplayValue
-		// resultMap["Priority"] = v.Priority.DisplayValue
-		// resultMap["Urgency"] = v.Urgency.DisplayValue
-		// resultMap["Approval"] = v.Approval.DisplayValue
-		// resultMap["UponApproval"] = v.UponApproval.DisplayValue
-		// resultMap["ProductionSystem"] = v.ProductionSystem.DisplayValue
-		// resultMap["SysCreatedOn"] = v.SysCreatedOn.DisplayValue
+		if v.Number.DisplayValue == "" {
+			continue
+		}
+		resultMap[v.Number.DisplayValue] = v.SysID.DisplayValue
 
 		fmt.Println("Change: ", v.Number.DisplayValue, " SysID: ", v.SysID.DisplayValue)
 	}
