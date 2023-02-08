@@ -74,6 +74,14 @@ func GetChange(host string, username string, password string) map[string]string 
 	return ParseChange(str)
 }
 
+func GetChangeRaw(host string, username string, password string) string {
+	URL := "https://" + host + "/api/sn_chg_rest/v1/change?sys_created_by=" + username
+	body := []byte(`{
+		"short_description": "Get record"
+	}`)
+	return HTTPAction("GET", URL, body, username, password)
+}
+
 // DeleteChange DELETE change by sysID from ServiceNow
 func DeleteChange(host string, sysID string, username string, password string) {
 	URL := "https://" + host + "/api/sn_chg_rest/v1/change/" + sysID
