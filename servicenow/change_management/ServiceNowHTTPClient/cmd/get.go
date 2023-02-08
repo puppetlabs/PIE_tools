@@ -29,4 +29,5 @@ func init() {
 	rootCmd.AddCommand(getCmd)
 	getCmd.AddCommand(nodesCmd)
 	getCmd.AddCommand(getChangeCommand)
+	getCmd.AddCommand(getAttributeCommand)
 }
