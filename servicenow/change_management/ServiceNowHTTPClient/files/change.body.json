@@ -1,4 +1,51 @@
 {
-		"short_description": "Reboot server on scheduled interval",
-		"assignment_group":  "Puppet Employees"
+	"number": "CHG0000001",
+	"requested_by": "David Loo",
+	"category": "Software",
+	"business_service": "SAP Enterprise Services",
+	"service_offering": "Example",
+	"configuration_item": "Sales Force Automation",
+	"type": "Normal",
+	"state": "New",
+	"conflict_status": "--None--",
+	"conflict_last_run": "Example",
+	"assignment_group":  "Puppet Employees",
+	"priority": "3 - Moderate",
+	"risk": "High",
+	"impact": "3 - Low",
+	"short_description": "Reboot server on scheduled interval",
+	"description": "Reboot server on scheduled interval",
+
+	"planning":{
+		"justification": "Example",
+		"implementaiton_plan": "Example",
+		"risk_and_impact_analysis": "Example",
+		"backout_plan": "Example",
+		"test_plan": "Example"
+	},
+
+	"schedule":{
+		"planned_start_date": "2016-01-01 00:00:00",
+		"planned_end_date": "2016-01-01 00:00:00",
+		"cab_required": "true",
+		"cab_date/time": "2016-01-01 00:00:00",
+		"actual_start_date": "2016-01-01 00:00:00",
+		"actual_end_date": "2016-01-01 00:00:00",
+		"cab_delegate": "David Loo",
+		"cab_recommendation": "Example"
+	},
+
+	"conflicts":{
+
+	},
+
+	"notes":{
+		"work_notes": "Example"
+	},
+
+	"closure_information":{
+		"close_code": "--None--",
+		"close_notes": "Example"
+	}
+
 }
