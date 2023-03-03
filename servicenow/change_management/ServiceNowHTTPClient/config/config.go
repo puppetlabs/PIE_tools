@@ -5,8 +5,12 @@ type Config struct {
 	Endpoint string
 	Username string
 	Password string
-	Loggingn struct {
+	Logging  struct {
 		ToFile   bool
 		Filename string
+	}
+	PE struct {
+		Endpoint string
+		Token    string
 	}
 }

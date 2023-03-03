@@ -2,6 +2,7 @@ package internal
 
 import (
 	"bytes"
+	"crypto/tls"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -16,6 +17,30 @@ func HTTPAction(operation string, URL string, body []byte, username string, pass
 
 	req, err := http.NewRequest(operation, URL, bytes.NewBuffer(body))
 	req.SetBasicAuth(username, password)
+	fmt.Println("req:", req)
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+	bodyText, err := ioutil.ReadAll(resp.Body)
+	s := string(bodyText)
+	writeActionToFile(operation, URL, body)
+	return s
+}
+
+func GetToken(host string, username string, password string) string {
+	URL := "rbac-api/v1/auth/token:4433"
+	body := []byte("{\"login\":\"" + username + "\",\"password\":\"" + password + "\"}")
+	s := HTTPAction("POST", URL, body, username, password)
+	return s
+}
+
+func HTTPTokenBasedAction(operation string, URL string, body []byte, token string) string {
+	client := &http.Client{}
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+	req, err := http.NewRequest(operation, URL, bytes.NewBuffer(body))
+	req.Header.Set("Authorization", "Bearer "+token)
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println(err)
