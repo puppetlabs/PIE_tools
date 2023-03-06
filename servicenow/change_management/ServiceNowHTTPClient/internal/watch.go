@@ -1,8 +1,6 @@
 package internal
 
-import (
-	"fmt"
-)
+import "fmt"
 
 type Result struct {
 	Result []struct {
@@ -12,13 +10,24 @@ type Result struct {
 	}
 }
 
-func GetActivity(host string, token string) {
-	URL := "https://" + host + ":4433/activity-api/v1/events?service_id=orchestrator&limit=100"
+// GetActivity gets a list of changes from ServiceNow
+func GetActivity(host string, username string, password string, limit string) {
+
+	token := GetToken(host, username, password)
+
+	// service := "classifier"
+	// service := "rbac"
+	// service := "orchestrator"
+	service := "pe-console"
+
+	URL := "https://" + host + ":4433/activity-api/v1/events?service_id=" + service + "&limit=" + limit
 	body := []byte(`{
 		"short_description": "Get record"
 	}`)
-	str := HTTPTokenBasedAction("GET", URL, body, token)
-	fmt.Println("GetActivity: ", str)
+
+	response := HTTPTokenBasedAction("GET", URL, body, token)
+
+	fmt.Println(">>>" + response + "<<<<<")
 }
 
 // func ParseActivity(responseBody string) map[string]string {

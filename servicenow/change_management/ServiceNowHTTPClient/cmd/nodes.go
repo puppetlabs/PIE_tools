@@ -20,9 +20,9 @@ var nodesCmd = &cobra.Command{
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Sending Get request")
-		endpoint := viper.GetString("endpoint")
-		username := viper.GetString("username")
-		password := viper.GetString("password")
+		endpoint := viper.GetString("servicenow.endpoint")
+		username := viper.GetString("servicenow.username")
+		password := viper.GetString("servicenow.password")
 
 		GetRecord(endpoint, username, password)
 	},

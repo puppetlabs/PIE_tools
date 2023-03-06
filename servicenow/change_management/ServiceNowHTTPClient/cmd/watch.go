@@ -16,12 +16,19 @@ var watchCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("This is watch running")
 
-		endpoint := viper.GetString("PE.endpoint")
-		// token := viper.GetString("PE.token")
+		limit := "10"
+		if len(args) == 1 {
+			limit = args[0]
+			fmt.Println("Limit reset to: " + limit)
+		}
 
-		//internal.GetActivity(endpoint, token)
-		str := internal.GetToken(endpoint, viper.GetString("username"), viper.GetString("password"))
-		fmt.Println("token = ", str)
+		endpoint := viper.GetString("PE.endpoint")
+		login := viper.GetString("PE.username")
+		password := viper.GetString("PE.password")
+
+		fmt.Print("endpoint=", endpoint+" login=", login+" password=", password+"\n")
+
+		internal.GetActivity(endpoint, login, password, limit)
 	},
 
 	Args: func(cmd *cobra.Command, args []string) error {
