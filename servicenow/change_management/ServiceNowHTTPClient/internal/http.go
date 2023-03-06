@@ -29,18 +29,13 @@ func HTTPAction(operation string, URL string, body []byte, username string, pass
 	return s
 }
 
-func GetToken(host string, username string, password string) string {
-	URL := "rbac-api/v1/auth/token:4433"
-	body := []byte("{\"login\":\"" + username + "\",\"password\":\"" + password + "\"}")
-	s := HTTPAction("POST", URL, body, username, password)
-	return s
-}
-
+// HTTPTokenBasedAction REST Action to ServiceNow
 func HTTPTokenBasedAction(operation string, URL string, body []byte, token string) string {
 	client := &http.Client{}
 	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 	req, err := http.NewRequest(operation, URL, bytes.NewBuffer(body))
-	req.Header.Set("Authorization", "Bearer "+token)
+	// req.Header.Set("Authorization", "Bearer: "+token)
+	req.Header.Set("X-Authentication", token)
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println(err)

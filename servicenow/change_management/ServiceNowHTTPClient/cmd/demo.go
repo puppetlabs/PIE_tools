@@ -20,9 +20,9 @@ var demoCmd = &cobra.Command{
 	  SNHttpClient run demo
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
-		endpoint := viper.GetString("endpoint")
-		username := viper.GetString("username")
-		password := viper.GetString("password")
+		endpoint := viper.GetString("servicenow.endpoint")
+		username := viper.GetString("servicenow.username")
+		password := viper.GetString("servicenow.password")
 
 		fmt.Println("Running demo command... ")
 		fmt.Println("endpoint=", endpoint+" username=", username+" password=", password+"\n")
