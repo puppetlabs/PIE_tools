@@ -1,13 +1,18 @@
 package internal
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+	"time"
+)
 
 type Result struct {
-	Result []struct {
-		Number struct {
-			DisplayValue string `json:"display_value"`
+	Commits []struct {
+		Events []struct {
+			Message string `json:"message"`
 		}
 	}
+	TotalRows int `json:"total-rows"`
 }
 
 // GetActivity gets a list of changes from ServiceNow
@@ -22,12 +27,25 @@ func GetActivity(host string, username string, password string, limit string) {
 
 	URL := "https://" + host + ":4433/activity-api/v1/events?service_id=" + service + "&limit=" + limit
 	body := []byte(`{
-		"short_description": "Get record"
-	}`)
+			"short_description": "Get record"
+		}`)
 
-	response := HTTPTokenBasedAction("GET", URL, body, token)
+	prevTotalRows := 0
+	var response string
+	for {
+		response = HTTPTokenBasedAction("GET", URL, body, token)
+		var Result Result
+		json.Unmarshal([]byte(response), &Result)
+		if Result.TotalRows == prevTotalRows {
+			continue
+		}
+		prevTotalRows = Result.TotalRows
+		for _, v := range Result.Commits {
+			fmt.Println("Change: ", v.Events[0].Message)
+		}
+		time.Sleep(time.Second * 2)
+	}
 
-	fmt.Println(">>>" + response + "<<<<<")
 }
 
 // func ParseActivity(responseBody string) map[string]string {
