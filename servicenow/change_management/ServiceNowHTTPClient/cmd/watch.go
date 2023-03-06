@@ -16,7 +16,7 @@ var watchCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("This is watch running")
 
-		limit := "10"
+		limit := "1"
 		if len(args) == 1 {
 			limit = args[0]
 			fmt.Println("Limit reset to: " + limit)
