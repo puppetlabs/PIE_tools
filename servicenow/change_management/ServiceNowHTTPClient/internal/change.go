@@ -3,13 +3,32 @@ package internal
 import (
 	"encoding/json"
 	"fmt"
-
-	"github.com/tidwall/gjson"
 )
 
 type ChangeResult struct {
-	Name  string
-	SysID string
+	Result struct {
+		Number struct {
+			DisplayValue string `json:"display_value"`
+		}
+		SysID struct {
+			DisplayValue string `json:"display_value"`
+		} `json:"sys_id"`
+		State struct {
+			DisplayValue string `json:"display_value"`
+		} `json:"state"`
+	} `json:"result"`
+}
+
+type ChangeError struct {
+	Error struct {
+		Message string `json:"message"`
+		Detail  string `json:"detail"`
+	} `json:"error"`
+	Status string `json:"status"`
+}
+
+type State struct {
+	State string `json:"state"`
 }
 
 type result struct {
@@ -51,17 +70,52 @@ type result struct {
 }
 
 // CreateChange POST change create to ServiceNow
-func CreateChange(host string, body []byte, username string, password string) ChangeResult {
+func CreateChange(host string, body []byte, username string, password string) *ChangeResult {
 	URL := "https://" + host + "/api/sn_chg_rest/v1/change"
 
 	fmt.Println("Post URL=" + URL + " body=" + string(body))
 
-	str := HTTPAction("POST", URL, body, username, password)
-	var resultChange ChangeResult
+	resp, err := HTTPAction("POST", URL, body, username, password)
+	if err != nil {
+		panic(err)
+	}
 
-	resultChange.Name = gjson.Get(str, "result.number.display_value").String()
-	resultChange.SysID = gjson.Get(str, "result.sys_id.display_value").String()
-	return resultChange
+	var resultChange ChangeResult
+	err = json.Unmarshal(resp, &resultChange)
+	if err != nil {
+		panic(err)
+	}
+
+	return &resultChange
+}
+
+// UpdateChange PATCH a 'normal' Change Request 'State' to ServiceNow
+func UpdateChange(host string, sysID string, state string, username string, password string) *ChangeResult {
+	URL := "https://" + host + "/api/sn_chg_rest/v1/change/normal/" + sysID
+
+	fmt.Println("PATCH URL=" + URL + " state=" + state)
+
+	changeState := State{
+		State: state,
+	}
+
+	body, err := json.Marshal(changeState)
+	if err != nil {
+		panic(err)
+	}
+
+	resp, err := HTTPAction("PATCH", URL, body, username, password)
+	if err != nil {
+		panic(err)
+	}
+
+	var resultChange ChangeResult
+	err = json.Unmarshal(resp, &resultChange)
+	if err != nil {
+		panic(err)
+	}
+
+	return &resultChange
 }
 
 // GetChange GET change by user from ServiceNow
@@ -70,16 +124,27 @@ func GetChange(host string, username string, password string) map[string]string 
 	body := []byte(`{
 		"short_description": "Get record"
 	}`)
-	str := HTTPAction("GET", URL, body, username, password)
-	return ParseChange(str)
+
+	resp, err := HTTPAction("GET", URL, body, username, password)
+	if err != nil {
+		panic(err)
+	}
+
+	return ParseChange(resp)
 }
 
-func GetChangeRaw(host string, username string, password string) string {
+func GetChangeRaw(host string, username string, password string) []byte {
 	URL := "https://" + host + "/api/sn_chg_rest/v1/change?sys_created_by=" + username
 	body := []byte(`{
 		"short_description": "Get record"
 	}`)
-	return HTTPAction("GET", URL, body, username, password)
+
+	resp, err := HTTPAction("GET", URL, body, username, password)
+	if err != nil {
+		panic(err)
+	}
+
+	return resp
 }
 
 // DeleteChange DELETE change by sysID from ServiceNow
@@ -92,10 +157,10 @@ func DeleteChange(host string, sysID string, username string, password string) {
 }
 
 // ParseChange parses the JSON response from ServiceNow
-func ParseChange(responseBody string) map[string]string {
+func ParseChange(responseBody []byte) map[string]string {
 
 	var data result
-	json.Unmarshal([]byte(responseBody), &data)
+	json.Unmarshal(responseBody, &data)
 	resultMap := make(map[string]string)
 
 	fmt.Println("number of Changes matching user: ", len(data.Result))
