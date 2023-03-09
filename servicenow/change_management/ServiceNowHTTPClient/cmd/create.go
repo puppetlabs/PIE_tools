@@ -15,7 +15,7 @@ var createCmd = &cobra.Command{
 
 	change/relationship/actions are supported.
 	Example usage:
-	  SNHttpClient create change|relationship|action>
+	  SNHttpClient create <change|relationship>
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("You're arguments were: " + strings.Join(args, ","))
@@ -23,13 +23,11 @@ var createCmd = &cobra.Command{
 	},
 
 	Args: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("Error: must also specify a resource like change, relationship, or action")
+		fmt.Println("error: Must use update with subcommand change or relationship")
 
 		return nil
 	},
 }
-
-// ScannerVersion is the version of the scanner associated with the benchmark.
 
 func init() {
 	rootCmd.AddCommand(createCmd)

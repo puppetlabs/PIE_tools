@@ -39,7 +39,7 @@ var demoCmd = &cobra.Command{
 
 		fmt.Println("Creating Change in SN... with body from file: " + filename)
 		response := internal.CreateChange(endpoint, body, username, password)
-		fmt.Println("Change ID = ", response.Name, " Sys ID=", response.SysID)
+
 		//Getting sys_id of change
 
 		//Going to get nodes from SN. Will return map of nodes and their sys_id
@@ -51,7 +51,7 @@ var demoCmd = &cobra.Command{
 		payloadStrNodes := strings.Join(nodesSlice, ",")
 		fmt.Println("payloadStrNodes=", payloadStrNodes)
 
-		internal.CreateRelationship(endpoint, response.SysID, payloadStrNodes, username, password)
+		internal.CreateRelationship(endpoint, response.Result.SysID.DisplayValue, payloadStrNodes, username, password)
 	},
 
 	Args: func(cmd *cobra.Command, args []string) error {

@@ -44,7 +44,7 @@ type changeResult struct {
 }
 
 // CreateRelationship POST relationship create to ServiceNow
-func CreateRelationship(host string, changeSysID string, nodeSysID string, username string, password string) string {
+func CreateRelationship(host string, changeSysID string, nodeSysID string, username string, password string) []byte {
 	URL := "https://" + host + "/api/sn_chg_rest/v1/change/" + changeSysID + "/ci"
 	body := []byte(`{
 		"cmdb_ci_sys_ids": "[` + nodeSysID + `]",
@@ -53,16 +53,20 @@ func CreateRelationship(host string, changeSysID string, nodeSysID string, usern
 
 	fmt.Println("Post URL=" + URL + " body=" + string(body))
 
-	str := HTTPAction("POST", URL, body, username, password)
-	fmt.Print("Relationship Response: " + str)
-	return str
+	resp, err := HTTPAction("POST", URL, body, username, password)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Print("Relationship Response: " + string(resp))
+	return resp
 }
 
 // ParseRelationship parses the JSON response from ServiceNow
-func ParseRelationship(responseBody string) map[string]string {
+func ParseRelationship(responseBody []byte) map[string]string {
 
 	var data result
-	json.Unmarshal([]byte(responseBody), &data)
+	json.Unmarshal(responseBody, &data)
 	resultMap := make(map[string]string)
 
 	fmt.Println("number of Changes matching user: ", len(data.Result))

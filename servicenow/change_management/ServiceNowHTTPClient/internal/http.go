@@ -23,7 +23,9 @@ func HTTPAction(operation string, URL string, body []byte, username string, pass
 	}
 
 	req.SetBasicAuth(username, password)
-	fmt.Println("req:", req)
+
+	// Is there a reason this is being printed?
+	// fmt.Println("req:", req)
 
 	resp, err := client.Do(req)
 	if err != nil {

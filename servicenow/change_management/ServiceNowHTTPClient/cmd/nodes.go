@@ -32,8 +32,6 @@ var nodesCmd = &cobra.Command{
 	},
 }
 
-// ScannerVersion is the version of the scanner associated with the benchmark.
-
 func init() {
 }
 
@@ -53,10 +51,13 @@ func GetRecord(endpoint string, username string, password string) map[string]str
 
 	URL := "https://" + endpoint + "/api/now/table/cmdb_ci_computer?sysparm_query=active=true&sysparm_fields=fqdn,sys_id"
 
-	result := internal.HTTPAction("GET", URL, body, username, password)
+	result, err := internal.HTTPAction("GET", URL, body, username, password)
+	if err != nil {
+		panic(err)
+	}
 
 	var data Result
-	json.Unmarshal([]byte(result), &data)
+	json.Unmarshal(result, &data)
 	resultMap := make(map[string]string)
 	for _, v := range data.Result {
 		resultMap[string(v.Certname)] = string(v.SysID)

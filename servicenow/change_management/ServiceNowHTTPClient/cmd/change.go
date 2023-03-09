@@ -60,9 +60,9 @@ var getChangeCommand = &cobra.Command{
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Your arguments were: [" + strings.Join(args, ",") + "]")
-		endpoint := viper.GetString("endpoint")
-		username := viper.GetString("username")
-		password := viper.GetString("password")
+		endpoint := viper.GetString("servicenow.endpoint")
+		username := viper.GetString("servicenow.username")
+		password := viper.GetString("servicenow.password")
 
 		fmt.Print("endpoint=", endpoint+
 			" username=", username+
@@ -86,9 +86,9 @@ var updateChangeCmd = &cobra.Command{
 	  SNHttpClient update change --sys_id <9d385017c611228701d22104cc95c371> --state <assess>
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
-		endpoint := viper.GetString("endpoint")
-		username := viper.GetString("username")
-		password := viper.GetString("password")
+		endpoint := viper.GetString("servicenow.endpoint")
+		username := viper.GetString("servicenow.username")
+		password := viper.GetString("servicenow.password")
 		sys_id, _ := cmd.Flags().GetString("sys_id")
 		state, _ := cmd.Flags().GetString("state")
 
@@ -132,9 +132,9 @@ var deleteChangeCmd = &cobra.Command{
 	  SNHttpClient delete changes 
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
-		endpoint := viper.GetString("endpoint")
-		username := viper.GetString("username")
-		password := viper.GetString("password")
+		endpoint := viper.GetString("servicenow.endpoint")
+		username := viper.GetString("servicenow.username")
+		password := viper.GetString("servicenow.password")
 
 		fmt.Println("Running delete command... ")
 		fmt.Println("endpoint=", endpoint+" username=", username+" password=", password+"\n")

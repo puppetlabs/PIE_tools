@@ -7,12 +7,12 @@ import (
 // initCmd is a subcommand to StoreCmd that ads a Benchmark to the store.
 var getCmd = &cobra.Command{
 	Use:   "get",
-	Short: "Gets an object from the SN CMDB",
-	Long: `Facilitates the execution of actions.
+	Short: "Gets objects from the SN CMDB",
+	Long: `Gets objects from SN'
 
-	nodes/change/relationship/ actions are supported.
+	nodes/change/attributes subcommands are supported.
 	Example usage:
-	  SNHttpClient get <action>
+	  SNHttpClient get <nodes|change|attributes>
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
 
@@ -22,8 +22,6 @@ var getCmd = &cobra.Command{
 		return nil
 	},
 }
-
-// ScannerVersion is the version of the scanner associated with the benchmark.
 
 func init() {
 	rootCmd.AddCommand(getCmd)
