@@ -16,7 +16,7 @@ var relationshipCmd = &cobra.Command{
 	Long: `Creates a Relationship request in SN.
 
 	Example usage:
-	  SNHttpClient create relationship <endpoint> <username> <password>
+	  SNHttpClient create relationship
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Your arguments were: [" + strings.Join(args, ",") + "]")
@@ -25,7 +25,7 @@ var relationshipCmd = &cobra.Command{
 		password := viper.GetString("password")
 
 		if len(args) < 2 {
-			fmt.Println("You must provide a changeID and node Node SysID")
+			fmt.Println("You must provide a change SysID and node SysID")
 			fmt.Println("Example: SNHttpClient create relationship 1234567890abcdef1234567890abcdef 1234567890abcdef1234567890abcdef")
 			return
 		}
@@ -44,8 +44,6 @@ var relationshipCmd = &cobra.Command{
 		return nil
 	},
 }
-
-// ScannerVersion is the version of the scanner associated with the benchmark.
 
 func init() {
 }

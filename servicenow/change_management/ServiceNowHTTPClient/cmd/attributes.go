@@ -29,9 +29,8 @@ var getAttributeCommand = &cobra.Command{
 			" username=", username+
 			" password=", password+"\n")
 
-		str := internal.GetChangeRaw(endpoint, username, password)
-		var j = []byte(str)
-		v, err := jason.NewObjectFromBytes(j)
+		chg := internal.GetChangeRaw(endpoint, username, password)
+		v, err := jason.NewObjectFromBytes(chg)
 
 		if err != nil {
 			panic(err)
@@ -48,11 +47,9 @@ var getAttributeCommand = &cobra.Command{
 
 			myMap := v.Map()
 
-			for k, _ := range myMap {
+			for k := range myMap {
 				fmt.Println(k)
 			}
-
-			break
 		}
 	},
 
@@ -60,8 +57,6 @@ var getAttributeCommand = &cobra.Command{
 		return nil
 	},
 }
-
-// ScannerVersion is the version of the scanner associated with the benchmark.
 
 func init() {
 }

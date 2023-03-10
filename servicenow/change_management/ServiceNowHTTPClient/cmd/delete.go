@@ -7,12 +7,12 @@ import (
 // deleteCmd runs a delete action
 var deleteCmd = &cobra.Command{
 	Use:   "delete",
-	Short: "Gets an object from the SN CMDB",
-	Long: `Facilitates the execution of actions.
+	Short: "Deletes Change Request objects in the SN CMDB",
+	Long: `Deletes change requests in SN.
+  
 
-	nodes/change/relationship/ actions are supported.
 	Example usage:
-	  SNHttpClient get <action>
+	  SNHttpClient delete changes
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
 

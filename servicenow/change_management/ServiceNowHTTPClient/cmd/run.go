@@ -7,12 +7,11 @@ import (
 // initCmd is a subcommand to StoreCmd that ads a Benchmark to the store.
 var runCmd = &cobra.Command{
 	Use:   "run",
-	Short: "Gets an object from the SN CMDB",
-	Long: `Facilitates the execution of actions.
+	Short: "Run a demo",
+	Long: `Runs a demo command that will do a simple compliance sequence.
 
-	nodes/change/relationship/ actions are supported.
 	Example usage:
-	  SNHttpClient get <action>
+	  SNHttpClient run demo
 		`,
 	Run: func(cmd *cobra.Command, args []string) {
 

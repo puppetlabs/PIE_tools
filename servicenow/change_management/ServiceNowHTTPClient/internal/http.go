@@ -3,6 +3,7 @@ package internal
 import (
 	"bytes"
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -12,21 +13,45 @@ import (
 )
 
 // HTTPAction REST Action to ServiceNow
-func HTTPAction(operation string, URL string, body []byte, username string, password string) string {
+func HTTPAction(operation string, URL string, body []byte, username string, password string) ([]byte, error) {
 	client := &http.Client{}
 
 	req, err := http.NewRequest(operation, URL, bytes.NewBuffer(body))
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+
 	req.SetBasicAuth(username, password)
-	fmt.Println("req:", req)
+
+	// Is there a reason this is being printed?
+	// fmt.Println("req:", req)
+
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println(err)
 		panic(err)
 	}
-	bodyText, err := ioutil.ReadAll(resp.Body)
-	s := string(bodyText)
+
+	resp_body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println(err)
+		panic(err)
+	}
+
+	if resp.StatusCode != 200 {
+		var errorChange ChangeError
+		err = json.Unmarshal(resp_body, &errorChange)
+		if err != nil {
+			fmt.Println(err)
+			panic(err)
+		}
+		return nil, fmt.Errorf("error: %s", errorChange.Error.Message)
+	}
+
 	writeActionToFile(operation, URL, body)
-	return s
+
+	return resp_body, nil
 }
 
 // HTTPTokenBasedAction REST Action to ServiceNow
@@ -49,13 +74,12 @@ func HTTPTokenBasedAction(operation string, URL string, body []byte, token strin
 
 // writeActionToFile writes changes to json file
 func writeActionToFile(operation string, URL string, body []byte) {
-	LogActions := viper.GetBool("Logging.ToFile")
-	if LogActions == false {
-		return
-	}
+	LogActions := viper.GetBool("Servicenow.Logging.ToFile")
+	LogFileName := viper.GetString("Servicenow.Logging.Filename")
 
-	LogFileName := viper.GetString("Logging.Filename")
-	if LogActions == true && LogFileName == "" {
+	if !LogActions {
+		return
+	} else if LogFileName == "" && LogActions {
 		panic("LogFileName not set")
 	}
 
