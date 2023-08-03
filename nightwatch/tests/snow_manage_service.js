@@ -53,7 +53,8 @@ module.exports = {
         .setValue('#sp_formfield_name', 'puppet')
         .click('#s2id_sp_formfield_action')
         .click('#select2-drop > ul > li:nth-child(7)')
-        // .click('#submit-btn')
+
+        .click('#submit-btn')
         // End the test and close the browser
         .pause(5000)
     }

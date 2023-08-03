@@ -47,7 +47,7 @@ module.exports = {
         // TODO: Paste fqdn from parameters instead of hardcode
         .setValue('#sp_formfield_targets', 'ip-172-31-14-133.us-east-2.compute.internal')
 
-        // .click('#submit-btn')
+        .click('#submit-btn')
         // End the test and close the browser
         .pause(5000)
     }
