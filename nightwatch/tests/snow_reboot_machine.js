@@ -24,13 +24,17 @@ module.exports = {
         // Wait for the Service Catalog page to load
         .waitForElementVisible('body', 5000)
 
-        // Click the "Run a Command" link
-        .click('h3.catalog-item-name[title="Run Puppet"]')
-        // Wait for the Command page to load
+        // Make sure the link is visible in card form. this ensures the link is a h3 not a span like grid view
+        .click('#tab-card')
+
+        // Click the link
+        .click('h3.catalog-item-name[title="Reboot a Machine"]')
+
+        // Wait for the page to load
         .waitForElementVisible('body', 5000)
 
         // Perform assertions or further actions as needed
-        .assert.titleContains('Run Puppet')
+        .assert.titleContains('Reboot a Machine')
 
         // Select "PE Connection alias 1" from the "Puppet Server Connection" dropdown
         .click('#s2id_sp_formfield_puppet_server')
@@ -43,7 +47,7 @@ module.exports = {
         // TODO: Paste fqdn from parameters instead of hardcode
         .setValue('#sp_formfield_targets', 'ip-172-31-14-133.us-east-2.compute.internal')
 
-        .click('#submit-btn')
+        // .click('#submit-btn')
         // End the test and close the browser
         .pause(5000)
     }
