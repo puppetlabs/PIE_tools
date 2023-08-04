@@ -23,13 +23,21 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: nightwatch/package-lock.json
+        key: ${{ secrets.SSH_KEY }}
+        name: id_rsa # optional
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        config: ${{ secrets.CONFIG }} # ssh_config; optional
+        if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
+        - uses: actions/checkout@v3
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v3
+          with:
+            node-version: ${{ matrix.node-version }}
+            cache: 'npm'
+            cache-dependency-path: nightwatch/package-lock.json
     - run: npm install nightwatch/package.json
     - run: npm run build --if-present
     - run: npm test
