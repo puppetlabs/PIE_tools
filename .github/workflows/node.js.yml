@@ -21,11 +21,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - run: cd /home/runner/work/PIE_tools/PIE_tools/nightwatch
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd /home/runner/work/PIE_tools/PIE_tools
-    - run: ls -ltr
     - run: ls -ltr
