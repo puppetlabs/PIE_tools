@@ -27,7 +27,8 @@ jobs:
     - run: pwd
     - run: ls -ltr
     - run: ls -ltr ..
-    - run: find /home/runner/ -type f
+    - run: ls -l /home
+    - run: ls -l /home/runner
     - run: cd nightwatch
     - run: npm install package.json
     - run: npm run build --if-present
