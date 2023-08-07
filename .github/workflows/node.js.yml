@@ -27,3 +27,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - run: npm install package-lock.json
+      working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
+      
