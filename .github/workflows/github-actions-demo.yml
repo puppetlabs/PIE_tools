@@ -25,6 +25,8 @@ jobs:
     steps:
     - run: npm install npm@latest -g
     - run: pwd
+    - run: ls -ltr
+    - run: ls -ltr ..
     - run: cd nightwatch
     - run: npm install package.json
     - run: npm run build --if-present
