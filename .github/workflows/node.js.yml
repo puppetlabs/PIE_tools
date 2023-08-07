@@ -26,5 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: pwd
+    - run: cd /home/runner/work/PIE_tools/PIE_tools
+    - run: ls -ltr
     - run: ls -ltr
