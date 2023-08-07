@@ -29,6 +29,9 @@ jobs:
     - run: ls -ltr ..
     - run: ls -l /home
     - run: ls -l /home/runner
+    - run: ls -l /home/runner/factory
+    - run: ls -l /home/runner/warmup
+    - run: ls -l /home/runner/work
     - run: cd nightwatch
     - run: npm install package.json
     - run: npm run build --if-present
