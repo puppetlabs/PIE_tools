@@ -29,7 +29,7 @@ jobs:
     - run: ls -ltr ..
     - run: ls -l /home
     - run: ls -l /home/runner
-    - run: ls -l /home/runner/work/PIE_tools
+    - run: ls -l /home/runner/work/PIE_tools/PIE_tools
     - run: cd nightwatch
     - run: npm install package.json
     - run: npm run build --if-present
