@@ -32,7 +32,7 @@ jobs:
       working-directory: /home/runner/work/PIE_tools/PIE_tools
     - run: npm init nightwatch . --yes
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
-    - run: ls -al && pwd && ls -al nightwatch
+    - run: ls -al && pwd && cat nightwatch.conf.js
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
     - run: npx nightwatch ./tests/snow_run_command.js
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
