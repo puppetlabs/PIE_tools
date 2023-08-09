@@ -27,8 +27,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: '**/package-lock.json'
-    - run: npm install package-lock.json
+        cache-dependency-path: '**/package.json'
+    - run: npm install package.json
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
     - run: npm init nightwatch --config nightwatch.conf.js
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
