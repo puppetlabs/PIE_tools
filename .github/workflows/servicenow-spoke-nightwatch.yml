@@ -30,6 +30,6 @@ jobs:
         cache-dependency-path: '**/package-lock.json'
     - run: npm install package-lock.json
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
-    - run: npm init nightwatch /home/runner/work/PIE_tools/PIE_tools
+    - run: npm init nightwatch /home/runner/work/PIE_tools/PIE_tools/nightwatch
     - run: npx nightwatch ./tests/snow_run_command.js
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
