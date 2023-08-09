@@ -30,6 +30,8 @@ jobs:
         cache-dependency-path: '**/package.json'
     - run: npm install package.json
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
+    - run: mkdir nightwatch
+      working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
     - run: npm init nightwatch . --yes
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
     - run: npx nightwatch ./tests/snow_run_command.js
