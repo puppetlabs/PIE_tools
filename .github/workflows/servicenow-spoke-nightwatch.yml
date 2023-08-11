@@ -1,25 +1,36 @@
-name: Nightwatch Tests 
+name: Nightwatch Tests
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
-on: 
-  push: 
-    branches: [ "main" ] 
-  pull_request: 
-    branches: [ "main" ] 
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
   
-jobs: 
-  build: 
-    runs-on: ubuntu-latest 
-    strategy: 
-      matrix: 
-        node-version: [18.x] 
-    
-    steps: 
-    - uses: actions/checkout@v3 
-    - name: Use Node.js ${{ matrix.node-version }} 
-      uses: actions/setup-node@v3 
-      with: 
-        node-version: ${{ matrix.node-version }} 
-        cache: 'npm' 
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: '**/package.json'
+    - run: mkdir custom-assertions custom-commands page-objects examples
+      working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
+    - run: npm install package.json
+      working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
     - run: npm ci 
     - run: sudo apt-get install xvfb 
     - run: xvfb-run --auto-servernum npm test -- --env chrome
+    # - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js
+    #   working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
