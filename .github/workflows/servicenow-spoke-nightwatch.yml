@@ -30,7 +30,7 @@ jobs:
     - run: npm install package.json
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
     - run: npm ci 
-    - run: sudo apt-get install xvfb 
-    - run: xvfb-run --auto-servernum npm test -- --env chrome tests/snow_run_command.js
-    # - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js
+    # - run: sudo apt-get install xvfb 
+    # - run: xvfb-run --auto-servernum npm test -- --env chrome tests/snow_run_command.js
+    - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js
     #   working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
