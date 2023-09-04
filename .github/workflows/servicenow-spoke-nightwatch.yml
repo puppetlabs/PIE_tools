@@ -28,6 +28,7 @@ jobs:
     #- run: find /home/runner/
     - run: ls -ltr /opt/google/chrome
     - run: /opt/google/chrome/google-chrome --version
+    - run: /opt/google/chrome/chrome --version
     - run: find /home/runner/work/PIE_tools
     - run: mkdir custom-assertions custom-commands page-objects examples
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
