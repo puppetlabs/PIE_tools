@@ -28,6 +28,8 @@ jobs:
     #- run: find /home/runner/
     - run: ls -ltr /opt/google/chrome
     - run: /opt/google/chrome/google-chrome --version
+    - run: ls -ltr /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver/chromedriver
+    - run: ls -ltr /home/runner/work/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver/chromedriver
     - run: mkdir custom-assertions custom-commands page-objects examples
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
     - run: npm install package.json
