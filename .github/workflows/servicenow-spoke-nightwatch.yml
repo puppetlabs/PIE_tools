@@ -29,7 +29,7 @@ jobs:
     - run: ls -ltr /opt/google/chrome
     - run: /opt/google/chrome/google-chrome --version
     - run: /opt/google/chrome/chrome --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-    - run: find / -type d -name chromedriver 2>/dev/null
+    - run: find / | grep -v "Permission denied" | grep chromedriver 
     # - run: mkdir custom-assertions custom-commands page-objects examples
     #   working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
     # - run: npm install package.json
