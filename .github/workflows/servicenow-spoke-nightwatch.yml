@@ -38,6 +38,6 @@ jobs:
     # # - run: xvfb-run --auto-servernum npm test -- --env chrome tests/snow_run_command.js
     # - run: ps -elf | grep chrome
     # - run: /usr/bin/google-chrome --version
-    - run: /usr/local/share/chromedriver-linux64/chromedriver
+    - run: /usr/local/share/chromedriver-linux64/chromedriver --version
     - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js
     #   working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
