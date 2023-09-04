@@ -80,7 +80,7 @@ module.exports = {
 
       webdriver: {
         start_process: true,
-        server_path: '',
+        server_path: '/usr/local/share/chromedriver-linux64/',
         cli_args: [
           // --verbose
         ]
