@@ -31,7 +31,7 @@ jobs:
     - run: /opt/google/chrome/chrome --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
     - run: mkdir custom-assertions custom-commands page-objects examples
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
-    - run: mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/
+    - run: mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver
     - run: cp /usr/local/share/chromedriver-linux64/chromedriver /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver/. 
     - run: npm ci 
     # # - run: sudo apt-get install xvfb 
