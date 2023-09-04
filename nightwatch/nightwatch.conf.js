@@ -71,6 +71,7 @@ module.exports = {
           args: [
             '--no-sandbox',
             '--ignore-certificate-errors',
+            '--disable-extensions',
             '--allow-insecure-localhost',
             '--headless'
           ]
