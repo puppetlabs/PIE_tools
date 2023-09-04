@@ -25,7 +25,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: '**/package.json'
-    - run: find /home/runner/
+    #- run: find /home/runner/
+    - run: npm install chromedriver
     - run: mkdir custom-assertions custom-commands page-objects examples
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
     - run: npm install package.json
