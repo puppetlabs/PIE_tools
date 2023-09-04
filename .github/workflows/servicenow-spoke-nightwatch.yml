@@ -26,7 +26,7 @@ jobs:
         cache: 'npm'
         cache-dependency-path: '**/package.json'
     #- run: find /home/runner/
-    - run: which chrome
+    - run: find / -type f | grep chrome
     - run: mkdir custom-assertions custom-commands page-objects examples
       working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
     - run: npm install package.json
