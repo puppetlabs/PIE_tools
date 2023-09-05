@@ -25,16 +25,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: '**/package.json'
-
-    - uses: actions/download-artifact@v3
-      with:
-        name: /home/runner/work/PIE_tools/PIE_tools/nightwatch/logs/tests/snow_run_command_chromedriver.log
-      if: ${{ always() }} # To ensure this step runs even when earlier steps fail
-        
-        
-
-
-    
+   
     #- run: find /home/runner/
     - run: ls -ltr /opt/google/chrome
     - run: /opt/google/chrome/google-chrome --version
@@ -52,3 +43,9 @@ jobs:
     - run: /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver/chromedriver --version
     - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js
         #   working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
+    
+    - uses: actions/download-artifact@v3
+      with:
+        name: /home/runner/work/PIE_tools/PIE_tools/nightwatch/logs/tests/snow_run_command_chromedriver.log
+      if: ${{ always() }} # To ensure this step runs even when earlier steps fail
+       
