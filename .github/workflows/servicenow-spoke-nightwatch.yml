@@ -41,8 +41,19 @@ jobs:
     # - run: /usr/bin/google-chrome --version
     - run: /usr/local/share/chromedriver-linux64/chromedriver --version
     - run: /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver/chromedriver --version
-    - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js && echo "GH ------> DINGO BAG HAT" >> $GITHUB_OUTPUT
+    - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js && ls -ltr /home/runner/work/PIE_tools/PIE_tools/nightwatch/logs/tests && cat /home/runner/work/PIE_tools/PIE_tools/nightwatch/logs/tests/snow_run_command_chromedriver.log
 
+
+    - name: "Publish test results"
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3.7.3
+      with: 
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: './tests_output/nightwatch-html-report'
+        keep_files: true
+        user_name: "greghardy"
+        user_email: "greg.hardy@perforce.com"
+    
     # - name: 'Get version'
     #   id: vars
     #   run: echo "GH ------> version=$(cat VERSION)" >> $GITHUB_OUTPUT
