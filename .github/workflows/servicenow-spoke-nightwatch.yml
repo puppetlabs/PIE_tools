@@ -41,7 +41,7 @@ jobs:
     # - run: /usr/bin/google-chrome --version
     - run: /usr/local/share/chromedriver-linux64/chromedriver --version
     - run: /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver/chromedriver --version
-    - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js; echo "GH ------> DINGO BAG HAT"
+    - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js && echo "GH ------> DINGO BAG HAT"
 
     # - name: 'Get version'
     #   id: vars
