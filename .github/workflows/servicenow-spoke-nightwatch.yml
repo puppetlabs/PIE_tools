@@ -41,4 +41,5 @@ jobs:
     - run: /usr/local/share/chromedriver-linux64/chromedriver --version
     - run: /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver/chromedriver --version
     - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js
-    #   working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
+        #   working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
+    - run: cat /home/runner/work/PIE_tools/PIE_tools/nightwatch/logs/tests/snow_run_command_chromedriver.log

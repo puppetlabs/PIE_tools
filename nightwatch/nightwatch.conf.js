@@ -9,7 +9,9 @@
 // | |\  || || (_| || | | || |_  \ V  V / | (_| || |_ | (__ | | | |
 // \_| \_/|_| \__, ||_| |_| \__|  \_/\_/   \__,_| \__| \___||_| |_|
 //             __/ |
-//            |___/
+//            |_
+
+
 
 module.exports = {
   // An array of folders (excluding subfolders) where your tests are located;
@@ -31,6 +33,13 @@ module.exports = {
   
   // See https://nightwatchjs.org/guide/concepts/test-globals.html
   globals_path: '',
+
+  globals: {
+    
+    // this controls whether to abort the test execution when an assertion failed and skip the rest
+    // it's being used in waitFor commands and expect assertions
+    abortOnAssertionFailure: true,
+  },
   
   webdriver: {},
 
@@ -70,9 +79,9 @@ module.exports = {
           w3c: true,
           args: [
             '--no-sandbox',
-            '--ignore-certificate-errors',
+            // '--ignore-certificate-errors',
             '--disable-extensions',
-            '--allow-insecure-localhost',
+            // '--allow-insecure-localhost',
             '--headless'
           ]
         }
