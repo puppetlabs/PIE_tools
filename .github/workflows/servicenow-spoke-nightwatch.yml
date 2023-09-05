@@ -44,8 +44,11 @@ jobs:
     - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js
         #   working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
     
-    - uses: actions/download-artifact@v3
+    - uses: dsaltares/fetch-gh-release-asset@master
       with:
-        name: /home/runner/work/PIE_tools/PIE_tools/nightwatch/logs/tests/snow_run_command_chromedriver.log
+        repo: 'dsaltares/godot-wild-jam-18'
+        version: 'tags/v0.1.18'
+        file: '/home/runner/work/PIE_tools/PIE_tools/nightwatch/logs/tests/snow_run_command_chromedriver.log'
+        token: ${{ secrets.GITHUB_TOKEN }}
       if: ${{ always() }} # To ensure this step runs even when earlier steps fail
        
