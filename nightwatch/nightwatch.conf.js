@@ -91,7 +91,7 @@ module.exports = {
         start_process: true,
         server_path: '/home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver/',
         cli_args: [
-          --verbose
+          // --verbose
         ]
       }
     },
