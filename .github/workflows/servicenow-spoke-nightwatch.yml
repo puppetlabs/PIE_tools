@@ -34,6 +34,11 @@ jobs:
         export DISPLAY=:99
         chromedriver --url-base=/wd/hub &
         sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
+        mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/custom-assertions 
+        mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/custom-commands
+        mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/page-objects 
+        mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/examples
+        #   working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
         sudo xvfb-run --auto-servernum npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js
 
 
