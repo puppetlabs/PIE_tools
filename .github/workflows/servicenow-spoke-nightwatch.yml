@@ -38,7 +38,7 @@ jobs:
         mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/custom-commands
         mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/page-objects 
         mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/examples
-        #   working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
+        npm ci 
         sudo xvfb-run --auto-servernum npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js
 
 
