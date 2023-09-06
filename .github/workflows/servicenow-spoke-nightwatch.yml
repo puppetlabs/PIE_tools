@@ -25,34 +25,43 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: '**/package.json'
-   
+
+    - uses: nanasess/setup-chromedriver@v2
+      with:
+        # Optional: do not specify to match Chrome's version
+        chromedriver-version: '88.0.4324.96'
+    - run: |
+        export DISPLAY=:99
+        chromedriver --url-base=/wd/hub &
+        sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
+
     #- run: find /home/runner/
-    - run: ls -ltr /opt/google/chrome
-    - run: /opt/google/chrome/google-chrome --version
-    - run: /opt/google/chrome/chrome --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-    - run: mkdir custom-assertions custom-commands page-objects examples
-      working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
-    - run: mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver
-    - run: cp /usr/local/share/chromedriver-linux64/chromedriver /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver/. 
-    - run: npm ci 
-    # # - run: sudo apt-get install xvfb 
-    # # - run: xvfb-run --auto-servernum npm test -- --env chrome tests/snow_run_command.js
-    # - run: ps -elf | grep chrome
-    # - run: /usr/bin/google-chrome --version
-    - run: /usr/local/share/chromedriver-linux64/chromedriver --version
-    - run: /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver/chromedriver --version
-    - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js && ls -ltr /home/runner/work/PIE_tools/PIE_tools/nightwatch/logs/tests && cat /home/runner/work/PIE_tools/PIE_tools/nightwatch/logs/tests/snow_run_command_chromedriver.log
+    # - run: ls -ltr /opt/google/chrome
+    # - run: /opt/google/chrome/google-chrome --version
+    # - run: /opt/google/chrome/chrome --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+    # - run: mkdir custom-assertions custom-commands page-objects examples
+    #   working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
+    # - run: mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver
+    # - run: cp /usr/local/share/chromedriver-linux64/chromedriver /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver/. 
+    # - run: npm ci 
+    # # # - run: sudo apt-get install xvfb 
+    # # # - run: xvfb-run --auto-servernum npm test -- --env chrome tests/snow_run_command.js
+    # # - run: ps -elf | grep chrome
+    # # - run: /usr/bin/google-chrome --version
+    # - run: /usr/local/share/chromedriver-linux64/chromedriver --version
+    # - run: /home/runner/work/PIE_tools/PIE_tools/nightwatch/node_modules/chromedriver/lib/chromedriver/chromedriver --version
+    # - run: npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js && ls -ltr /home/runner/work/PIE_tools/PIE_tools/nightwatch/logs/tests && cat /home/runner/work/PIE_tools/PIE_tools/nightwatch/logs/tests/snow_run_command_chromedriver.log
 
 
-    - name: "Publish test results"
-      if: always()
-      uses: peaceiris/actions-gh-pages@v3.7.3
-      with: 
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: './tests_output/nightwatch-html-report'
-        keep_files: true
-        user_name: "greghardy"
-        user_email: "greg.hardy@perforce.com"
+    # - name: "Publish test results"
+    #   if: always()
+    #   uses: peaceiris/actions-gh-pages@v3.7.3
+    #   with: 
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: './tests_output/nightwatch-html-report'
+    #     keep_files: true
+    #     user_name: "greghardy"
+    #     user_email: "greg.hardy@perforce.com"
     
     # - name: 'Get version'
     #   id: vars
