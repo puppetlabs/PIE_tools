@@ -39,6 +39,7 @@ jobs:
         mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/page-objects 
         mkdir -p /home/runner/work/PIE_tools/PIE_tools/nightwatch/examples
         ps -elf | grep -i chrome | grep -v grep | awk '{ print $4 }'
+        netstat -naeep | grep 9515
         # npm ci 
         # sudo xvfb-run --auto-servernum npx nightwatch --config nightwatch.conf.js tests/snow_run_command.js
 
