@@ -16,7 +16,7 @@ module.exports = {
         // Wait for the home page to load after successful login
         .waitForElementVisible('body', 10000)
 
-        .assert.env('SNOW_USERNAME')
+        .assert.process.env.SNOW_USERNAME
         .assert.titleContains('Puppet Dev')
         
         
