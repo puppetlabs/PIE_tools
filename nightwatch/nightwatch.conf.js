@@ -64,7 +64,8 @@ module.exports = {
       
       webdriver: {
         start_process: true,
-        server_path: ''
+        port: 9777,
+        server_path: '/usr/local/bin/chromedriver'
       },
       
     },
