@@ -7,9 +7,8 @@ module.exports = {
         .waitForElementVisible('body', 5000)
 
         // Enter the username and password
-        .setValue('#user_name', process.secrets.SNOW_USERNAME)
-        .setValue('#user_password', process.secrets.SNOW_PASS)
-
+        .setValue('#user_name', process.env.SNOW_USERNAME)
+        .setValue('#user_password', process.env.SNOW_PASS)
 
         // Submit the login form
         .click('#sysverb_login')
