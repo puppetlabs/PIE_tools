@@ -27,7 +27,7 @@ jobs:
         cache-dependency-path: '**/package.json'
     - uses: browser-actions/setup-chrome@v1
       with:
-        chrome-version: '119.0.5995.0'
+        chrome-version: 'latest'
       id: setup-chrome
      
     - uses: nanasess/setup-chromedriver@v2
