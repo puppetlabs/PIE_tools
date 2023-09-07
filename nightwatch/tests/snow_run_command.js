@@ -16,8 +16,8 @@ module.exports = {
         // Wait for the home page to load after successful login
         .waitForElementVisible('body', 10000)
 
-        // .assert.titleContains('Puppet Dev')
-        .assert.titleContains('Service Portal - Service Portal')
+        .assert.env('SNOW_USERNAME')
+        .assert.titleContains('Puppet Dev')
         
         
         // Navigate to the Service Catalog page
