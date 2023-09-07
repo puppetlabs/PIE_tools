@@ -62,12 +62,6 @@ module.exports = {
         browserName: 'chrome'
       },
       
-      // webdriver: {
-      //   start_process: true,
-      //   port: 9777,
-      //   server_path: '/usr/local/bin/chromedriver'
-      // },
-      
     },
     
     chrome: {
@@ -87,16 +81,6 @@ module.exports = {
           ]
         }
       },
-
-      // webdriver: {
-      //   start_process: true,
-      //   server_path: '/usr/local/bin/chromedriver',
-      //   cli_args: [
-      //     // --verbose
-      //   ]
-      // }
     },
-    
   },
-  
 };
