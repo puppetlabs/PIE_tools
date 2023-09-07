@@ -7,8 +7,8 @@ module.exports = {
         .waitForElementVisible('body', 5000)
 
         // Enter the username and password
-        .setValue('#user_name', process.env.SNOW_USERNAME)
-        .setValue('#user_password', process.env.SNOW_PASS)
+        .setValue('#user_name', process.secrets.SNOW_USERNAME)
+        .setValue('#user_password', process.secrets.SNOW_PASS)
 
 
         // Submit the login form
@@ -25,9 +25,6 @@ module.exports = {
         // Wait for the Service Catalog page to load
         .waitForElementVisible('body', 10000)
 
-        .element('css selector', 'body', function(result) { console.log(result.value) })
-
-        .console.log('GH: ======> test')
         // Click the "Run a Command" link
         .click('h3.catalog-item-name[title="Run a Command"]')
         // Wait for the Command page to load
