@@ -31,7 +31,7 @@ jobs:
       id: setup-chrome
      
     - uses: nanasess/setup-chromedriver@v2
-      with:
+      # with:
         # Optional: do not specify to match Chrome's version
         # chromedriver-version: '88.0.4324.96'
         
