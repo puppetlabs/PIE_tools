@@ -84,7 +84,8 @@ module.exports = {
             '--disable-extensions',
             // '--allow-insecure-localhost',
             '--headless'
-          ]
+          ],
+          version: '88.0.4324.150',
         }
       },
     },
