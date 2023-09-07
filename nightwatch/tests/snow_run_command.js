@@ -27,7 +27,7 @@ module.exports = {
 
         .element('css selector', 'body', function(result) { console.log(result.value) })
 
-        console.log('GH: ======> test')
+        .console.log('GH: ======> test')
         // Click the "Run a Command" link
         .click('h3.catalog-item-name[title="Run a Command"]')
         // Wait for the Command page to load
