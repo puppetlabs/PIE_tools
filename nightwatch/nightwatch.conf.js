@@ -62,6 +62,12 @@ module.exports = {
         browserName: 'chrome'
       },
       
+      webdriver: {
+        start_process: true,
+        port: 9515,
+        server_path: '/usr/local/bin/chromedriver'
+      },
+      
     },
     
     chrome: {
@@ -82,5 +88,7 @@ module.exports = {
         }
       },
     },
+    
   },
+  
 };
