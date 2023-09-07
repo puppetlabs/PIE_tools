@@ -16,7 +16,9 @@ module.exports = {
         // Wait for the home page to load after successful login
         .waitForElementVisible('body', 10000)
 
-        .assert.titleContains('Puppet Dev')
+        // .assert.titleContains('Puppet Dev')
+        .assert.titleContains('Service Portal - Service Portal')
+        
         
         // Navigate to the Service Catalog page
         .url('https://puppetdev.service-now.com/sp?id=sc_category&sys_id=2571da7f2f32201013dfc886f699b66b&catalog_id=-1')
