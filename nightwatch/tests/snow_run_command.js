@@ -25,7 +25,7 @@ module.exports = {
         // Wait for the Service Catalog page to load
         .waitForElementVisible('body', 10000)
 
-        print('Service Catalog body ' + body.get_text())
+        .element('css selector', 'body', function(result) { console.log(result.value) })
 
         // Click the "Run a Command" link
         .click('h3.catalog-item-name[title="Run a Command"]')
