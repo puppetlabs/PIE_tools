@@ -41,7 +41,7 @@ module.exports = {
     abortOnAssertionFailure: true,
   },
   
-  webdriver: {},
+  // webdriver: {},
 
   test_workers: {
     enabled: true
@@ -87,13 +87,13 @@ module.exports = {
         }
       },
 
-      webdriver: {
-        start_process: true,
-        server_path: '/usr/local/bin/chromedriver',
-        cli_args: [
-          // --verbose
-        ]
-      }
+      // webdriver: {
+      //   start_process: true,
+      //   server_path: '/usr/local/bin/chromedriver',
+      //   cli_args: [
+      //     // --verbose
+      //   ]
+      // }
     },
     
   },
