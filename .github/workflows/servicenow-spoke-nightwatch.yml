@@ -10,6 +10,7 @@ jobs:
     defaults:
       run:
         working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
+      
   
     runs-on: ubuntu-latest
 
@@ -38,6 +39,7 @@ jobs:
         
 
     - run: |
+        echo "grego ==> ${secrets.SNOW_USERNAME}"
         echo Installed chromium version: ${{ steps.setup-chrome.outputs.chrome-version }}
         ${{ steps.setup-chrome.outputs.chrome-path }} --version
         export DISPLAY=:99
