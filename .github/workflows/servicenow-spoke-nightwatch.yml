@@ -47,6 +47,7 @@ jobs:
 
     - run: |
         echo "Value of SNOW_USERNAME: $SNOW_USERNAME"
+        echo "Value of secrets SNOW_USERNAME: ${{ toJSON(secrets) }}"
         echo Installed chromium version: ${{ steps.setup-chrome.outputs.chrome-version }}
         ${{ steps.setup-chrome.outputs.chrome-path }} --version
         export DISPLAY=:99
