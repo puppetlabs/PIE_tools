@@ -46,7 +46,7 @@ jobs:
             
 
     - run: |
-        echo "grego ==> ${secrets.SNOW_USERNAME}"echo "Value of MY_SECRET1: $MY_SECRET1"
+        echo "Value of MY_SECRET1: $MY_SECRET1"
         echo Installed chromium version: ${{ steps.setup-chrome.outputs.chrome-version }}
         ${{ steps.setup-chrome.outputs.chrome-path }} --version
         export DISPLAY=:99
