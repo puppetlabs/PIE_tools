@@ -31,11 +31,9 @@ jobs:
           SNOW_PASS: ${{ secrets.SNOW_PASS }}
 
 
-    - name: view the secrets context
-      shell: bash
-      run: echo "$SECRETS_CONTEXT"
-      env:
-        SECRETS_CONTEXT: ${{ toJson(secrets) }}
+    - uses: oNaiPs/secrets-to-env-action@v1
+      with:
+        secrets: ${{ toJSON(secrets) }}
 
     - uses: browser-actions/setup-chrome@v1
       with:
@@ -48,7 +46,7 @@ jobs:
             
 
     - run: |
-        echo "grego ==> ${secrets.SNOW_USERNAME}"
+        echo "grego ==> ${secrets.SNOW_USERNAME}"echo "Value of MY_SECRET1: $MY_SECRET1"
         echo Installed chromium version: ${{ steps.setup-chrome.outputs.chrome-version }}
         ${{ steps.setup-chrome.outputs.chrome-path }} --version
         export DISPLAY=:99
