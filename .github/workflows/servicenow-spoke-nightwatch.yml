@@ -43,7 +43,7 @@ jobs:
     - uses: nanasess/setup-chromedriver@v2
 
     - name: Tell me a secret!
-      run: echo "My existing secret is ${{ secrets.SNOW_USERNAME }}"
+      run: echo "My existing secret is ${{ secrets }}"
             
 
     # - run: |
