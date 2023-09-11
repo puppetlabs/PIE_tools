@@ -1,11 +1,5 @@
 name: Nightwatch Tests
 on:
-  workflow_call:
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
-      username: ${{ secrets.SNOW_USERNAME }}
-      pass: ${{ secrets.SNOW_PASS }}
-
   push:
     branches: [ main ]
   pull_request:
@@ -47,7 +41,7 @@ jobs:
     - name: Tell me a secret!
       run: |
         echo "My existing secret is ${{ toJSON(secrets) }}"
-        echo "My secret is >>$secrets.SNOW_USERNAME<<"
+        echo "My secret is >>${{ secrets.SNOW_USERNAME<< }}"
 
 
             
