@@ -1,15 +1,10 @@
 name: Nightwatch Tests
 on:
   workflow_call:
-    inputs:
-      config-path:
-        required: true
-        type: string
     secrets:
-      SNOW_USERNAME:
-        required: true
-      SNOW_PASS:
-        required: true
+      token: ${{ secrets.GITHUB_TOKEN }}
+      username: ${{ secrets.SNOW_USERNAME }}
+      pass: ${{ secrets.SNOW_PASS }}
 
   push:
     branches: [ main ]
@@ -22,8 +17,6 @@ jobs:
       run:
         working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
      
-      
-  
     runs-on: ubuntu-latest
 
     strategy:
@@ -50,8 +43,10 @@ jobs:
       id: setup-chrome
      
     - uses: nanasess/setup-chromedriver@v2
+      secrets: inherit
 
     - name: Tell me a secret!
+      secrets: inherit
       env:
         SNOW_USERNAME: ${{ secrets.SNOW_USERNAME }}
         SNOW_PASS: ${{ secrets.SNOW_PASS }}
