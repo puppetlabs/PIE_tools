@@ -1,5 +1,16 @@
 name: Nightwatch Tests
 on:
+  workflow_call:
+    inputs:
+      config-path:
+        required: true
+        type: string
+    secrets:
+      SNOW_USERNAME:
+        required: true
+      SNOW_PASS:
+        required: true
+        
   push:
     branches: [ main ]
   pull_request:
