@@ -43,7 +43,10 @@ jobs:
     - uses: nanasess/setup-chromedriver@v2
 
     - name: Tell me a secret!
-      run: echo "My existing secret is ${{ toJSON(secrets) }}"
+      run: |
+        echo "My existing secret is ${{ toJSON(secrets) }}"
+
+
             
 
     # - run: |
