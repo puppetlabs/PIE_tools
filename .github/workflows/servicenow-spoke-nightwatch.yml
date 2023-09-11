@@ -7,48 +7,33 @@ on:
 
 jobs:
   build:
-    defaults:
-      run:
-        working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
-     
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x]
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: '**/package.json'
+      - uses: nanasess/setup-chromedriver@v2
+        name: Setup ChromeDriver and Run
+        with: # Set the secret as an input
+            SNOW_USERNAME: ${{ secrets.SNOW_USERNAME }}
+        env: # Or as an environment variable
+          snow_username: ${{ secrets.SNOW_USERNAME }}
 
+      - run: |
+        echo "Value of SNOW_USERNAME: $SNOW_USERNAME"
+        
+    #   - uses: actions/checkout@v3
+    # - name: Use Node.js ${{ matrix.node-version }}
+    #   uses: actions/setup-node@v3
+    #   with:
+    #     node-version: ${{ matrix.node-version }}
+    #     cache: 'npm'
+    #     cache-dependency-path: '**/package.json'
 
-    - uses: oNaiPs/secrets-to-env-action@v1
-      with:
-        secrets: ${{ toJSON(secrets) }}
-
-    - uses: browser-actions/setup-chrome@v1
-      with:
-        chrome-version: 'latest'
-      id: setup-chrome
+    # - uses: browser-actions/setup-chrome@v1
+    #   with:
+    #     chrome-version: 'latest'
+    #   id: setup-chrome
      
-    - uses: nanasess/setup-chromedriver@v2
-
-    - name: Tell me a secret!
-      env:
-        MY_USERNAME: ${{ secrets.SNOW_USERNAME }}
-        MY_PASS: ${{ secrets.SNOW_PASS }}
-      run: |
-        echo "My existing secret is ${{ toJSON(secrets) }}"
-        echo "My secret is >>$MY_USERNAME<<"
-        echo " blah ${{ secrets.SNOW_USERNAME }} blah"
-
-
-            
+    
 
     # - run: |
     #     echo "Value of SNOW_USERNAME: $SNOW_USERNAME"
