@@ -16,7 +16,7 @@ jobs:
           snow_username: ${{ secrets.SNOW_USERNAME }}
 
       - run: |
-          echo "Value of SNOW_USERNAME: $snow_username"
+          echo "Value of SNOW_USERNAME: ${{snow_username}}"
           echo "Value of secrets: ${{ toJSON(env) }}"
 
     #   - uses: actions/checkout@v3
