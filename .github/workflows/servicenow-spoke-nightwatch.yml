@@ -46,7 +46,7 @@ jobs:
 
     - name: Tell me a secret!
       env:
-        SNOW_USERNAME: ${{ secrets.SNOW_USERNAME }}
+        SNOW_USERNAME: ${{ env.SNOW_USERNAME }}
         SNOW_PASS: ${{ secrets.SNOW_PASS }}
       run: |
         echo "My existing secret is ${{ toJSON(secrets) }}"
