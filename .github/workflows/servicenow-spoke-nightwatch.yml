@@ -16,8 +16,8 @@ jobs:
           snow_username: ${{ secrets.SNOW_USERNAME }}
 
       - run: |
-          echo "Value of SNOW_USERNAME: ${{snow_username}}"
-          echo "Value of secrets: ${{ toJSON(env) }}"
+          # echo "Value of SNOW_USERNAME: ${{snow_username}}"
+          env
 
     #   - uses: actions/checkout@v3
     # - name: Use Node.js ${{ matrix.node-version }}
