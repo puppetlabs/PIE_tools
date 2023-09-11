@@ -43,10 +43,8 @@ jobs:
       id: setup-chrome
      
     - uses: nanasess/setup-chromedriver@v2
-      secrets: inherit
 
     - name: Tell me a secret!
-      secrets: inherit
       env:
         SNOW_USERNAME: ${{ secrets.SNOW_USERNAME }}
         SNOW_PASS: ${{ secrets.SNOW_PASS }}
