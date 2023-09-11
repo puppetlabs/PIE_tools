@@ -10,7 +10,7 @@ on:
         required: true
       SNOW_PASS:
         required: true
-        
+
   push:
     branches: [ main ]
   pull_request:
@@ -21,6 +21,7 @@ jobs:
     defaults:
       run:
         working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
+     
       
   
     runs-on: ubuntu-latest
@@ -37,9 +38,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: '**/package.json'
-      # env:
-      #     SNOW_USERNAME: ${{ secrets.SNOW_USERNAME }}
-      #     SNOW_PASS: ${{ secrets.SNOW_PASS }}
 
 
     - uses: oNaiPs/secrets-to-env-action@v1
@@ -54,6 +52,9 @@ jobs:
     - uses: nanasess/setup-chromedriver@v2
 
     - name: Tell me a secret!
+      env:
+        SNOW_USERNAME: ${{ secrets.SNOW_USERNAME }}
+        SNOW_PASS: ${{ secrets.SNOW_PASS }}
       run: |
         echo "My existing secret is ${{ toJSON(secrets) }}"
 
