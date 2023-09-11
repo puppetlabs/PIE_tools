@@ -17,7 +17,7 @@ jobs:
 
       - run: |
           # echo "Value of SNOW_USERNAME: ${{snow_username}}"
-          env
+          ls -altr
 
     #   - uses: actions/checkout@v3
     # - name: Use Node.js ${{ matrix.node-version }}
