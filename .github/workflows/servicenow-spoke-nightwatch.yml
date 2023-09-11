@@ -12,12 +12,9 @@ jobs:
     steps:
       - uses: nanasess/setup-chromedriver@v2
         name: Setup ChromeDriver and Run
-        env: # Or as an environment variable
-          snow_username: ${{ secrets.SNOW_USERNAME }}
-
+      
       - run: |
-          # echo "Value of SNOW_USERNAME: ${{snow_username}}"
-          ls -altr
+          # echo "Value of SNOW_USERNAME: ${{MY_USER}}"
 
     #   - uses: actions/checkout@v3
     # - name: Use Node.js ${{ matrix.node-version }}
