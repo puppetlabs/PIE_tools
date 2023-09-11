@@ -4,7 +4,7 @@
 name: Nightwatch Tests
 on:
   pull_request_target:
-    branches: [ main ]
+    types: [assigned, opened, synchronize, reopened]
 env:
   # Setting an environment variable with the value of a configuration variable
   env_var: ${{ vars.MY_USER }}
