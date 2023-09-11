@@ -57,7 +57,7 @@ jobs:
         SNOW_PASS: ${{ secrets.SNOW_PASS }}
       run: |
         echo "My existing secret is ${{ toJSON(secrets) }}"
-        echo "My secret is $SNOW_USERNAME"
+        echo "My secret is >>$SNOW_USERNAME<<"
 
 
             
