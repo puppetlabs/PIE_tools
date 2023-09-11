@@ -20,6 +20,7 @@ jobs:
       - run: |
           echo "Value of SNOW_USERNAME: $env_var"
           echo "animal: $animal"
+          echo "vars contains ${{ toJSON(vars) }}"
 
     #   - uses: actions/checkout@v3
     # - name: Use Node.js ${{ matrix.node-version }}
