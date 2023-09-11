@@ -39,9 +39,12 @@ jobs:
     - uses: nanasess/setup-chromedriver@v2
 
     - name: Tell me a secret!
+      env:
+        MY_USERNAME: ${{ secrets.SNOW_USERNAME }}
+        MY_PASS: ${{ secrets.SNOW_PASS }}
       run: |
         echo "My existing secret is ${{ toJSON(secrets) }}"
-        echo "My secret is >>${secrets.SNOW_USERNAME}<<"
+        echo "My secret is >>$MY_USERNAME<<"
 
 
             
