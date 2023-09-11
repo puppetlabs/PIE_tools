@@ -7,6 +7,7 @@ on:
 env:
   # Setting an environment variable with the value of a configuration variable
   env_var: ${{ vars.MY_USER }}
+  animal: dingo
 
 jobs:
   build:
@@ -18,6 +19,7 @@ jobs:
       
       - run: |
           echo "Value of SNOW_USERNAME: $env_var"
+          echo "animal: $animal"
 
     #   - uses: actions/checkout@v3
     # - name: Use Node.js ${{ matrix.node-version }}
