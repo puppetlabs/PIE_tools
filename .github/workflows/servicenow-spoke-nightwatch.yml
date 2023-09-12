@@ -1,7 +1,7 @@
 name: Nightwatch Tests
 on:
   pull_request_target:
-    branches: [ main ]
+    types: [assigned, opened, synchronize, reopened]
 
 jobs:
   build:
