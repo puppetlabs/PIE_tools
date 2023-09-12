@@ -7,11 +7,6 @@ on:
     branches:
       - main
 
-defaults:
-  run:
-    working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
-
-
 jobs:
   install-host:
     runs-on: ubuntu-latest
