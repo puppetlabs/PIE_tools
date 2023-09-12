@@ -1,41 +1,61 @@
 name: Nightwatch Tests
 on:
+  workflow_call:
+    inputs:
+      config-path:
+        required: true
+        type: string
+    secrets:
+      SNOW_USERNAME:
+        required: true
+      SNOW_PASS:
+        required: true
+
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-env:
-  # Setting an environment variable with the value of a configuration variable
-  env_var: ${{ vars.MY_USER }}
-  animal: dingo
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
+     
+      
+  
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [18.x]
+
     steps:
-      - uses: nanasess/setup-chromedriver@v2
-        name: Setup ChromeDriver and Run
-      
-      - run: |
-          echo "Value of SNOW_USERNAME: $env_var"
-          echo "animal: $animal"
-          echo "vars contains ${{ toJSON(vars) }}"
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: '**/package.json'
+      # env:
+      #     SNOW_USERNAME: ${{ secrets.SNOW_USERNAME }}
+      #     SNOW_PASS: ${{ secrets.SNOW_PASS }}
 
-    #   - uses: actions/checkout@v3
-    # - name: Use Node.js ${{ matrix.node-version }}
-    #   uses: actions/setup-node@v3
-    #   with:
-    #     node-version: ${{ matrix.node-version }}
-    #     cache: 'npm'
-    #     cache-dependency-path: '**/package.json'
 
-    # - uses: browser-actions/setup-chrome@v1
-    #   with:
-    #     chrome-version: 'latest'
-    #   id: setup-chrome
+    - uses: browser-actions/setup-chrome@v1
+      with:
+        chrome-version: 'latest'
+      id: setup-chrome
      
-    
+    - uses: nanasess/setup-chromedriver@v2
+
+    - name: Tell me a secret!
+      run: |
+        echo "My existing secret is ${{ toJSON(secrets) }}"
+
+
+            
 
     # - run: |
     #     echo "Value of SNOW_USERNAME: $SNOW_USERNAME"
