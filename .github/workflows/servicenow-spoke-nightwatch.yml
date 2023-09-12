@@ -1,7 +1,9 @@
 name: Nightwatch Tests
 on:
+  pull_request:
+      branches: [ main ]
   pull_request_target:
-    types: [assigned, opened, synchronize, reopened]
+    types: [assigned, opened, synchronize, reopened, edited, ready_for_review, review_requested, review_request_removed, labeled, unlabeled, synchronize, closed]
 
 jobs:
   build:
