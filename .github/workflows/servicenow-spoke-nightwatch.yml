@@ -1,20 +1,7 @@
 name: Nightwatch Tests
 on:
-  workflow_call:
-    inputs:
-      config-path:
-        required: true
-        type: string
-    secrets:
-      SNOW_USERNAME:
-        required: true
-      SNOW_PASS:
-        required: true
-
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    pull_request_target:
+      types: [assigned, opened, synchronize, reopened]
 
 jobs:
   build:
@@ -38,10 +25,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: '**/package.json'
-      # env:
-      #     SNOW_USERNAME: ${{ secrets.SNOW_USERNAME }}
-      #     SNOW_PASS: ${{ secrets.SNOW_PASS }}
-
+     
 
     - uses: browser-actions/setup-chrome@v1
       with:
@@ -53,10 +37,8 @@ jobs:
     - name: Tell me a secret!
       run: |
         echo "My existing secret is ${{ toJSON(secrets) }}"
-
-
-            
-
+        echo "My OHREALLY secret is ${{ secrets.OHREALLY }}"
+        
     # - run: |
     #     echo "Value of SNOW_USERNAME: $SNOW_USERNAME"
     #     echo "Value of secrets SNOW_USERNAME: ${{ toJSON(secrets) }}"
