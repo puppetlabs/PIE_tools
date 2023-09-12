@@ -35,5 +35,6 @@ jobs:
     steps:
       - name: Lets go
         run: |
-          echo ${{ secrets.SNOW_USERNAME }}
+          echo "my secret OHREALLY== ${{ secrets.OHREALLY }}"
+          tree /home/runner/work/
 
