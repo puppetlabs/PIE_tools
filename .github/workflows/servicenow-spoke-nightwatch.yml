@@ -1,7 +1,7 @@
 name: Nightwatch Tests
 on:
-    pull_request_target:
-      types: [assigned, opened, synchronize, reopened]
+  pull_request_target:
+    types: [assigned, opened, synchronize, reopened]
 
 jobs:
   build:
@@ -38,7 +38,7 @@ jobs:
       run: |
         echo "My existing secret is ${{ toJSON(secrets) }}"
         echo "My OHREALLY secret is ${{ secrets.OHREALLY }}"
-        
+
     # - run: |
     #     echo "Value of SNOW_USERNAME: $SNOW_USERNAME"
     #     echo "Value of secrets SNOW_USERNAME: ${{ toJSON(secrets) }}"
