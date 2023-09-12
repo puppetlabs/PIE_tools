@@ -1,10 +1,6 @@
 name: Nightwatch Tests
 on:
-  # pull_request_target:
-  #   types: [assigned, opened, synchronize, reopened]
-  pull_request:
-    types: [assigned, opened, synchronize, reopened]
-    
+  pull_request_target
 
 jobs:
   build:
