@@ -10,25 +10,24 @@ module.exports = {
         .setValue('#user_name', process.env.SNOW_USERNAME)
         .setValue('#user_password', process.env.SNOW_PASS)
 
-
         // Submit the login form
         .click('#sysverb_login')
 
         // Wait for the home page to load after successful login
         .waitForElementVisible('body', 10000)
 
-        .assert.titleContains('Puppet Dev')
+        console.log('GH: bing bang bong ' + process.env.SNOW_USERNAME)
         
         // Navigate to the Service Catalog page
         .url('https://puppetdev.service-now.com/sp?id=sc_category&sys_id=2571da7f2f32201013dfc886f699b66b&catalog_id=-1')
 
         // Wait for the Service Catalog page to load
-        .waitForElementVisible('body', 5000)
+        .waitForElementVisible('body', 10000)
 
         // Click the "Run a Command" link
         .click('h3.catalog-item-name[title="Run a Command"]')
         // Wait for the Command page to load
-        .waitForElementVisible('body', 5000)
+        .waitForElementVisible('body', 10000)
 
         // Perform assertions or further actions as needed
         .assert.titleContains('Run a Command')

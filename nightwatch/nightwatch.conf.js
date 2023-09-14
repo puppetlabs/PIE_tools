@@ -11,27 +11,39 @@
 //             __/ |
 //            |___/
 
+
 module.exports = {
   // An array of folders (excluding subfolders) where your tests are located;
   // if this is not specified, the test source must be passed as the second argument to the test runner.
-  src_folders: ['tests','nightwatch/examples'],
+
+  src_folders: ['tests','examples'],
 
   // See https://nightwatchjs.org/guide/concepts/page-object-model.html
-  page_objects_path: ['nightwatch/page-objects'],
+  page_objects_path: ['page-objects'],
 
   // See https://nightwatchjs.org/guide/extending-nightwatch/adding-custom-commands.html
-  custom_commands_path: ['nightwatch/custom-commands'],
+  custom_commands_path: ['custom-commands'],
 
   // See https://nightwatchjs.org/guide/extending-nightwatch/adding-custom-assertions.html
-  custom_assertions_path: ['nightwatch/custom-assertions'],
+  custom_assertions_path: ['custom-assertions'],
+
+
 
   // See https://nightwatchjs.org/guide/extending-nightwatch/adding-plugins.html
   plugins: [],
   
   // See https://nightwatchjs.org/guide/concepts/test-globals.html
   globals_path: '',
+
+  globals: {
+    
+    // this controls whether to abort the test execution when an assertion failed and skip the rest
+    // it's being used in waitFor commands and expect assertions
+    abortOnAssertionFailure: true,
+  },
   
-  webdriver: {},
+  // webdriver: {},
+
 
   test_workers: {
     enabled: true
@@ -54,9 +66,9 @@ module.exports = {
       
       webdriver: {
         start_process: true,
-        server_path: ''
+        port: 9515,
+        server_path: '/usr/local/bin/chromedriver'
       },
-      
     },
     
     chrome: {
@@ -68,23 +80,14 @@ module.exports = {
           // w3c:false tells Chromedriver to run using the legacy JSONWire protocol (not required in Chrome 78)
           w3c: true,
           args: [
-            //'--no-sandbox',
-            //'--ignore-certificate-errors',
-            //'--allow-insecure-localhost',
-            //'--headless'
-          ]
+            '--no-sandbox',
+            // '--ignore-certificate-errors',
+            '--disable-extensions',
+            // '--allow-insecure-localhost',
+            '--headless'
+          ],
         }
       },
-
-      webdriver: {
-        start_process: true,
-        server_path: '',
-        cli_args: [
-          // --verbose
-        ]
-      }
     },
-    
   },
-  
 };
