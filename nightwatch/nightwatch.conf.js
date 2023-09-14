@@ -9,13 +9,13 @@
 // | |\  || || (_| || | | || |_  \ V  V / | (_| || |_ | (__ | | | |
 // \_| \_/|_| \__, ||_| |_| \__|  \_/\_/   \__,_| \__| \___||_| |_|
 //             __/ |
-//            |_
-
+//            |___/
 
 
 module.exports = {
   // An array of folders (excluding subfolders) where your tests are located;
   // if this is not specified, the test source must be passed as the second argument to the test runner.
+
   src_folders: ['tests','examples'],
 
   // See https://nightwatchjs.org/guide/concepts/page-object-model.html
@@ -26,6 +26,7 @@ module.exports = {
 
   // See https://nightwatchjs.org/guide/extending-nightwatch/adding-custom-assertions.html
   custom_assertions_path: ['custom-assertions'],
+
 
 
   // See https://nightwatchjs.org/guide/extending-nightwatch/adding-plugins.html
@@ -42,6 +43,7 @@ module.exports = {
   },
   
   // webdriver: {},
+
 
   test_workers: {
     enabled: true
@@ -67,7 +69,6 @@ module.exports = {
         port: 9515,
         server_path: '/usr/local/bin/chromedriver'
       },
-      
     },
     
     chrome: {
@@ -88,7 +89,5 @@ module.exports = {
         }
       },
     },
-    
   },
-  
 };
