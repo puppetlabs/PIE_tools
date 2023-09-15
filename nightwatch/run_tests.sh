@@ -1,18 +1,5 @@
 #!/bin/bash
 
-SNOW_USERNAME=$1
-SNOW_PASS=$2
-
-if [ $# -ne 2 ]; then
-  echo "Usage: $0 <snow_username> <snow_password>"
-  exit 1
-fi
-
-if [ -z "$SNOW_USERNAME" ] || [ -z "$SNOW_PASS" ]; then
-  echo "Usage: $0 <snow_username> <snow_password>"
-  exit 1
-fi
-
 worked(){
   result=$1
   if [ ${result} -ne 0 ]; then
@@ -22,7 +9,7 @@ worked(){
 }
 
 # This script is meant to be run on a fresh Ubuntu 20.04 install.
-SNOW_USERNAME=$(vault kv get -format=json -mount=secret username)
+SNOW_USERNAME=$(vault kv get -format=username -mount=secret username)
 worked $? "Failed to get username from vault"
 SNOW_PASSWORD=$(vault kv get -field=password -mount=secret password)
 worked $? "Failed to get password from vault"
