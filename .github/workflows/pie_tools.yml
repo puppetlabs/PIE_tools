@@ -1,0 +1,23 @@
+name: Nightwatch Tests
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    defaults:
+      run:
+        working-directory: /home/runner/work/PIE_tools/PIE_tools/nightwatch
+     
+    
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+
+    - run: |
+      echo "this is pie tools action running"
+      apt install tree
+      pwd
+      tree PIE_tools/
