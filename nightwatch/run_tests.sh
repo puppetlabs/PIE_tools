@@ -1,5 +1,5 @@
 #!/bin/bash
-TO_EMAIL_ADDRESS="w5q9n8m2j0m2p1f8@perforce.slack.com"
+TO_EMAIL_ADDRESS="pie-bot-builds-aaaakygte6vfkv3stcaiyzsdvy@perforce.slack.com"
 
 worked(){
   result=$1
@@ -19,14 +19,11 @@ notify_slack(){
 
 
 # This script is meant to be run on a fresh Ubuntu 20.04 install.
-SNOW_USERNAME=$(vault kv get -field=username -mount=secret username)
-worked $? "Failed to get username from vault"
-
-SNOW_PASS=$(vault kv get -field=password -mount=secret password)
-worked $? "Failed to get password from vault"
+SNOW_USERNAME=$(env | grep SNOW_USERNAME | cut -d= -f2)
+SNOW_PASS=$(env | grep SNOW_PASS | cut -d= -f2)
 
 if [ "${SNOW_USERNAME}" == "" ] || [ "${SNOW_PASS}" == "" ]; then
-  echo "Failed to get username or password from vault"
+  echo "Failed to get username or password"
   exit 1
 fi
 
