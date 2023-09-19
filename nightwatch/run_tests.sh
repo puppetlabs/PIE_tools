@@ -11,7 +11,6 @@ worked(){
 # This script is meant to be run on a fresh Ubuntu 20.04 install.
 SNOW_USERNAME=$(vault kv get -field=username -mount=secret username)
 worked $? "Failed to get username from vault"
-
 SNOW_PASS=$(vault kv get -field=password -mount=secret password)
 worked $? "Failed to get password from vault"
 
