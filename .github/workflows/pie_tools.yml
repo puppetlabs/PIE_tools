@@ -1,4 +1,3 @@
-name: PIE Tools Action
 run-name: still testing out GitHub Actions 🚀
 on: [push]
 jobs:
